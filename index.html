@@ -581,7 +581,7 @@ function section(id) {
 /* Rules first: guests must tap "I've read the house rules" before the rest of the guide opens.
    RULES_DAYS = 0 shows the rules every time the guide is opened.
    Set it to a number (e.g. 3) to remember the tap on that phone for that many days instead. */
-var RULES_DAYS = 0, RULES_KEY = "fc-rules-read", rulesReadNow = false;
+var RULES_DAYS = 3, RULES_KEY = "fc-rules-read", rulesReadNow = false;
 function rulesOK() {
   if (rulesReadNow) return true;
   if (!RULES_DAYS) return false;
