@@ -299,7 +299,7 @@ var SECTIONS = [
   { id: "checkout", title: "Check-out", blurb: "10am, and before you leave" },
   { id: "contact", title: "Contact us", blurb: "Suzy and Arwel" },
   { id: "emergency", title: "Emergencies", blurb: "999, hospital, taxis", wide: true },
-  { id: "stay", title: "Share your stay", blurb: "Check in, tag us and get offers", feature: true }
+  { id: "stay", title: "Share your stay", blurb: "Follow us for offers, check in and tag us", feature: true }
 ];
 
 function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -439,11 +439,11 @@ var VIEWS = {
   stay: function () {
     function link(url, inner, cls) { return '<a class="' + (cls || "btn") + '" href="' + esc(url) + '" target="_blank" rel="noopener">' + inner + "</a>"; }
     var signup = GUIDE.signup ? link(GUIDE.signup, "Sign me up") : '<span class="pending" style="width:auto;height:auto;min-height:0;padding:10px 18px;display:inline-block;border-radius:999px">Sign-up link coming soon</span>';
-    return '<section class="share-hero"><img class="hero-bg" src="img/night.jpg" alt=""><div class="share-hero-in"><div class="eyebrow" style="color:var(--gold-soft)">Enjoying Forge Cottage?</div><h3>Share your stay with us</h3><div class="social">' + link(GUIDE.facebook, FB_LOGO, "social-link") + link(GUIDE.instagram, IG_LOGO, "social-link") + '</div><p>We\'re a small family business and every check-in, tag and review really helps. Tap a logo to find us.</p></div></section>' +
+    return '<section class="share-hero"><img class="hero-bg" src="img/night.jpg" alt=""><div class="share-hero-in"><div class="eyebrow" style="color:var(--gold-soft)">Enjoying Forge Cottage?</div><h3>Share your stay with us</h3><div class="social">' + link(GUIDE.facebook, FB_LOGO, "social-link") + link(GUIDE.instagram, IG_LOGO, "social-link") + '</div><p>We\'re a small family business and every check-in, tag and review really helps. <b>Drop us a follow</b> so you\'re first to see our offers, last-minute dates and news.</p></div></section>' +
       '<article class="share-main"><div class="share-copy"><span class="chip">Guests hear first</span><h3>Join our mailing list</h3><p>Be the first to hear about last-minute dates, special offers and what\'s new at Escape to the Stables, before they go anywhere else. No spam, and you can unsubscribe any time.</p><div class="actions">' + signup + '</div></div></article>' +
       '<div class="share-grid">' +
-      '<article class="share-card">' + link(GUIDE.facebook, FB_LOGO, "social-link big-logo") + '<div><h3>Check in on Facebook</h3><p>Open our page, tap <b>Check in</b> and let your friends know where you\'re staying. Then give us a like.</p></div>' + link(GUIDE.facebook, "Open Facebook") + '</article>' +
-      '<article class="share-card">' + link(GUIDE.instagram, IG_LOGO, "social-link big-logo") + '<div><h3>Tag us on Instagram</h3><p>Post your hot tub evenings and hillside views and tag <b>@escapetothestables</b>. We love seeing your photos and might share our favourites.</p></div>' + link(GUIDE.instagram, "Open Instagram") + '</article>' +
+      '<article class="share-card">' + link(GUIDE.facebook, FB_LOGO, "social-link big-logo") + '<div><h3>Check in on Facebook</h3><p>Open our page, tap <b>Check in</b> and let your friends know where you\'re staying. Then hit <b>Follow</b> so you don\'t miss our offers and last-minute deals.</p></div>' + link(GUIDE.facebook, "Follow on Facebook") + '</article>' +
+      '<article class="share-card">' + link(GUIDE.instagram, IG_LOGO, "social-link big-logo") + '<div><h3>Tag us on Instagram</h3><p>Post your hot tub evenings and hillside views and tag <b>@escapetothestables</b>. We love seeing your photos and might share our favourites. Follow us too, for offers and behind-the-scenes news.</p></div>' + link(GUIDE.instagram, "Follow on Instagram") + '</article>' +
       '<article class="share-card">' + link(GUIDE.website, '<img src="img/hills.jpg" alt="" style="width:72px;height:72px;border-radius:50%;object-fit:cover">', "social-link big-logo") + '<div><h3>Come back soon</h3><p>Book your next stay direct on our website, <b>escapetothestables.co.uk</b>.</p></div>' + link(GUIDE.website, "Visit our website") + '</article>' +
       '</div>' +
       '<div class="notice"><strong>Photo ideas:</strong> the hot tub under the stars, Forge Cottage lit up at night, sunset over the Clwydian Range, a cosy evening by the wood stove, or a cone from Chilly Cow.</div>' +
