@@ -67,7 +67,7 @@ a { color: var(--forest); }
 .tile svg { width: 30px; height: 30px; stroke: var(--forest); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .tile b { font-family: var(--font-display); font-size: 19px; color: var(--forest); font-weight: 600; }
 .tile span { font-size: 14px; color: var(--muted); line-height: 1.35; }
-.tile.feature { background: var(--forest); border-color: var(--forest); }
+.tile.feature { background: var(--forest); border-color: var(--forest); grid-column: 1 / -1; min-height: 0; }
 .tile.feature b, .tile.feature span { color: #fff; }
 .tile.feature svg { stroke: var(--gold-soft); }
 @media (max-width: 860px) { .tiles { grid-template-columns: repeat(3, 1fr); } }
@@ -199,9 +199,12 @@ var TREATS = [
   { n: "Vale Vineyard", ll: "53.210366,-3.380964", d: "About 5 min", where: "Dre Goch Isaf, Llandyrnog", t: "Gwinllan y Dyffryn, our local vineyard just down the road. Vineyard tours and wine tastings, mainly in the summer months, by appointment, so call or book ahead. You can also buy their wines at the cellar door.", tel: "07815 140945", web: "valevineyard.co.uk" }
 
 ];
+var WALKS = [
+  { n: "Clwydian Range walks", d: "Right on your doorstep", where: "Clwydian Range", t: "An Area of Outstanding Natural Beauty, with ridge walks and views over the Vale of Clwyd." },
+  { n: "Offa's Dyke Path", d: "Close by", where: "Offa's Dyke Path, Clwydian Range", t: "The national trail follows the Clwydian ridge just above the cottage. Join it for a short stroll or a full day's hike." }
+];
 var TODO = [
   { group: "From the doorstep", items: [
-    { n: "Clwydian Range walks", d: "Right on your doorstep", t: "An Area of Outstanding Natural Beauty, with ridge walks and views over the Vale of Clwyd. Offa's Dyke Path is close by." },
     { n: "Denbigh Castle & town", d: "About 5 min", t: "A medieval castle, historic walls, independent shops and cafés." } ] },
   { group: "Adventure", items: [
     { n: "Zip World Velocity", d: "About 45 min, Bethesda", t: "The fastest zip line in the world, over a vast slate quarry. Book well in advance.", web: "zipworld.co.uk" },
@@ -227,7 +230,8 @@ var ICONS = {
   eat: '<path d="M7 3v8a2 2 0 0 0 2 2v8"/><path d="M5 3v6M9 3v6"/><path d="M17 3c-2 2-2 6 0 8v10"/>',
   takeaway: '<path d="M5 8h14l-1.5 12h-11z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
   treats: '<path d="M8 10a4 4 0 0 1 8 0"/><path d="M7 10h10l-5 11z"/>',
-  todo: '<path d="m3 20 6-11 4 7 3-4 5 8z"/><circle cx="17" cy="6" r="2"/>',
+  todo: '<path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-6h6v6"/><path d="M4 9h16"/>',
+  walks: '<path d="m3 20 6-11 4 7 3-4 5 8z"/><circle cx="17" cy="6" r="2"/>',
   checkout: '<path d="M14 4h5v16h-5"/><path d="M4 12h11M11 8l4 4-4 4"/>',
   contact: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
   emergency: '<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/>',
@@ -241,7 +245,8 @@ var SECTIONS = [
   { id: "eat", title: "Eating out", blurb: "Our favourite pubs and restaurants" },
   { id: "takeaway", title: "Takeaways", blurb: "Delivery and collection" },
   { id: "treats", title: "Local treats", blurb: "Farm ice cream and produce" },
-  { id: "todo", title: "Things to do", blurb: "Walks, castles, coast" },
+  { id: "walks", title: "Walks", blurb: "Clwydian Range and Offa's Dyke" },
+  { id: "todo", title: "Things to do", blurb: "Castles, coast, adventure" },
   { id: "checkout", title: "Check-out", blurb: "10am, and before you leave" },
   { id: "contact", title: "Contact us", blurb: "Suzy and Arwel" },
   { id: "emergency", title: "Emergencies", blurb: "999, hospital, taxis" },
@@ -324,6 +329,11 @@ var VIEWS = {
   treats: function () {
     return '<p class="intro">Some of the most unique food experiences in North Wales are right on your doorstep.</p><div class="grid2">' +
       TREATS.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>";
+  },
+  walks: function () {
+    return '<p class="intro">Some of the best walking in North Wales starts from the cottage. Wear good boots, and check the weather before heading up onto the ridge.</p><div class="grid2">' +
+      WALKS.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>" +
+      '<div class="notice green"><strong>Our full walking guide is coming soon,</strong> with our favourite routes from the door, distances and timings. In the meantime, ask Suzy or Arwel for their tips.</div>';
   },
   todo: function () {
     return '<p class="intro">Adventure, wildlife, coast and culture, all within easy reach. Journey times are approximate by car. Please check opening times and book ahead for the busier attractions.</p>' +
