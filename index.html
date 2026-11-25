@@ -565,10 +565,12 @@ function section(id) {
   return '<div class="bar"><div class="wrap"><button class="btn" data-go="">← Home</button><h2>' + s.title + '</h2></div></div><div class="wrap"><div class="view">' + VIEWS[id]() + "</div></div>";
 }
 /* Rules first: guests must tap "I've read the house rules" before the rest of the guide opens.
-   The tap is remembered on that phone or tablet for RULES_DAYS days, then the rules show again. */
-var RULES_DAYS = 3, RULES_KEY = "fc-rules-read", rulesReadNow = false;
+   RULES_DAYS = 0 shows the rules every time the guide is opened.
+   Set it to a number (e.g. 3) to remember the tap on that phone for that many days instead. */
+var RULES_DAYS = 0, RULES_KEY = "fc-rules-read", rulesReadNow = false;
 function rulesOK() {
   if (rulesReadNow) return true;
+  if (!RULES_DAYS) return false;
   try { var t = +localStorage.getItem(RULES_KEY); return t > 0 && Date.now() - t < RULES_DAYS * 864e5; } catch (e) { return false; }
 }
 function gate() {
@@ -592,7 +594,7 @@ document.addEventListener("submit", function (e) {
   location.href = "mailto:" + GUIDE.email + "?subject=" + encodeURIComponent("Suggestions & feedback - Forge Cottage") + "&body=" + encodeURIComponent(body);
 });
 document.addEventListener("click", function (e) {
-  if (e.target.closest && e.target.closest("[data-accept]")) { rulesReadNow = true; try { localStorage.setItem(RULES_KEY, String(Date.now())); } catch (err) {} render(); return; }
+  if (e.target.closest && e.target.closest("[data-accept]")) { rulesReadNow = true; try { localStorage.setItem(RULES_KEY, String(Date.now())); } catch (err) {} if (location.hash) history.replaceState(null, "", location.pathname + location.search); render(); return; }
   var so = e.target.closest ? e.target.closest("[data-social]") : null;
   if (so) { e.preventDefault(); e.stopPropagation(); var k = so.getAttribute("data-social"), url = GUIDE[k];
     if (isPhone()) { window.open(url, "_blank", "noopener"); return; }
