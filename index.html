@@ -183,13 +183,11 @@ var EAT = [
 ];
 var TAKEAWAY = [
   { n: "Coriander Indian", del: true, where: "4 Bridge St, Denbigh", t: "Locals rave about it: tandoori, balti, vegetarian dishes, kebabs and a kids menu, with generous portions.", tel: "01745 818777", web: "mycoriander.co.uk" },
-  { n: "Simply Fish & Chips", del: true, where: "Denbigh", t: "Highly rated local chippy with no minimum order. Also does pizza.", web: "Order via Just Eat" },
-  { n: "Domino's Denbigh", del: true, where: "Denbigh Shopping Park", t: "Reliable pizza delivery. Order online or in the app and check for deals. Minimum order applies.", web: "dominos.co.uk" },
+  { n: "Simply Fish & Chips", del: true, where: "Denbigh", t: "Highly rated local chippy with no minimum order. Also does pizza.", tel: "01745 812999", web: "Order via Just Eat" },
+  { n: "Domino's Denbigh", del: true, where: "Denbigh Shopping Park", t: "Reliable pizza delivery. Order online or in the app and check for deals. Minimum order applies.", tel: "01745 777077", web: "dominos.co.uk" },
   { n: "Chen Lin Chinese", del: true, where: "Back Row, Denbigh", t: "Popular Chinese restaurant and takeaway, well reviewed for portion size and value.", tel: "01745 816100" },
   { n: "Tai Wing Express", del: true, where: "2 Rhyl Rd, Denbigh", t: "Highly rated Chinese takeaway with quick service.", tel: "01745 812158" },
-  { n: "Subway Denbigh", del: true, where: "Denbigh", t: "A lighter option, delivered to the door.", web: "Order via Just Eat" },
-  { n: "Sun City Chinese", del: false, where: "Denbigh", t: "A local favourite for years, known for generous portions. Cash preferred, so call ahead to check." },
-  { n: "Finns Fish & Chip Shop", del: false, where: "Denbigh", t: "Classic British chippy. Collect and bring it back to enjoy at the cottage." }
+  { n: "Subway Denbigh", del: true, where: "Denbigh", t: "A lighter option, delivered to the door.", web: "Order via Just Eat" }
 ];
 var TREATS = [
   { n: "Chilly Cow Ice Cream", d: "About 15 min", where: "Llanychan, near Ruthin", pc: "LL15 1UF", t: "Farm ice cream with an honesty box. Made on the family farm from the milk of their Brown Swiss cows: honeycomb, chocolate fudge, sorbets, vegan options and even ice cream for dogs. Find the freezer by the farm gate.", web: "chillycow.co.uk" },
@@ -319,7 +317,7 @@ var VIEWS = {
     var del = TAKEAWAY.filter(function (p) { return p.del; }), col = TAKEAWAY.filter(function (p) { return !p.del; });
     return '<div class="notice warn"><strong>Read this before ordering delivery.</strong> Our postcode ' + GUIDE.location.postcode + " does <b>not</b> bring drivers to our door. Always <b>call the restaurant</b> and give them our GPS coordinates <span class=\"mono\">" + GUIDE.location.gps + '</span> or what3words <span class="mono">' + GUIDE.location.w3w + "</span>. Some apps may show us as outside the delivery area, and a quick phone call usually sorts it. If a driver is struggling to find us, they can ring Suzy or Arwel.</div>" +
       '<div class="sub">Delivering to the area</div><div class="grid2">' + del.map(function (p) { return place(p, '<span class="chip green">Delivers</span>'); }).join("") + "</div>" +
-      '<div class="sub">Collection only</div><div class="grid2">' + col.map(function (p) { return place(p, '<span class="chip">Collection</span>'); }).join("") + "</div>";
+      (col.length ? '<div class="sub">Collection only</div><div class="grid2">' + col.map(function (p) { return place(p, '<span class="chip">Collection</span>'); }).join("") + "</div>" : "");
   },
   treats: function () {
     return '<p class="intro">Some of the most unique food experiences in North Wales are right on your doorstep.</p><div class="grid2">' +
