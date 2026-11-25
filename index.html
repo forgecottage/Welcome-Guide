@@ -81,8 +81,9 @@ a { color: var(--forest); }
 .tile.feature svg { stroke: var(--gold-soft); }
 .tile.feature { position: relative; }
 .tile .social { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); display: flex; gap: 14px; }
-.tile .social svg { width: 48px; height: 48px; }
-@media (max-width: 600px) { .tile .social { position: static; transform: none; margin-top: 6px; } .tile .social svg { width: 36px; height: 36px; } }
+.tile .social { gap: 18px; }
+.tile .social svg { width: 76px; height: 76px; }
+@media (max-width: 600px) { .tile.feature { padding-right: 150px; } .tile .social { right: 14px; gap: 10px; } .tile .social svg { width: 58px; height: 58px; } }
 .social-link { cursor: pointer; display: inline-flex; align-items: center; gap: 10px; color: inherit; }
 .social-link svg { transition: transform .15s; }
 .social-link:active svg { transform: scale(.92); }
@@ -252,20 +253,20 @@ var WALKS = [
 
 var TODO = [
   { group: "From the doorstep", items: [
-    { n: "Denbigh Castle & town", d: "About 5 min", t: "A medieval castle, historic walls, independent shops and cafés." } ] },
+    { n: "Denbigh Castle & town", d: "About 5 min", t: "A medieval castle, historic walls, independent shops and cafés.", web: "cadw.gov.wales", url: "https://cadw.gov.wales/visit/places-to-visit/denbigh-castle" } ] },
   { group: "Adventure", items: [
-    { n: "Zip World Velocity", d: "About 45 min, Bethesda", t: "The fastest zip line in the world, over a vast slate quarry. Book well in advance.", web: "zipworld.co.uk" },
-    { n: "Zip World Bounce Below", d: "About 40 min, Blaenau Ffestiniog", t: "Underground trampolines in a huge Victorian slate cavern. Titan, a four-person zip line, is at the same site.", web: "zipworld.co.uk" },
-    { n: "Adventure Parc Snowdonia", d: "About 40 min, Dolgarrog", t: "An inland surf lagoon with lessons for all abilities, plus other water activities.", web: "adventuresnowdonia.com" } ] },
+    { n: "Zip World Velocity", d: "About 45 min, Bethesda", t: "The fastest zip line in the world, over a vast slate quarry. Book well in advance.", web: "zipworld.co.uk", url: "https://www.zipworld.co.uk/locations/penrhyn-quarry" },
+    { n: "Zip World Bounce Below", d: "About 40 min, Blaenau Ffestiniog", t: "Underground trampolines in a huge Victorian slate cavern. Titan, a four-person zip line, is at the same site.", web: "zipworld.co.uk", url: "https://www.zipworld.co.uk/locations/llechwedd" },
+    { n: "Adventure Parc Snowdonia", d: "About 40 min, Dolgarrog", t: "Indoor and outdoor adventures whatever the weather: extreme slides, adrenaline drops, high ropes and adventure play.", web: "adventureparc.co.uk", url: "https://www.adventureparc.co.uk/" } ] },
   { group: "Zoos & wildlife", items: [
-    { n: "Welsh Mountain Zoo", d: "About 25 min, Colwyn Bay", t: "The National Zoo of Wales, high above Colwyn Bay with sea views.", web: "welshmountainzoo.org" },
-    { n: "Anglesey Sea Zoo", d: "About 50 min, Anglesey", t: "Marine life from Welsh waters. A good rainy-day option with a lovely drive over the Menai Strait.", web: "angleseyseazoo.co.uk" },
-    { n: "Bodnant Garden", d: "About 30 min, Conwy Valley", t: "One of the finest gardens in Wales (National Trust), with views towards Snowdonia and a good tearoom.", web: "nationaltrust.org.uk" } ] },
+    { n: "Welsh Mountain Zoo", d: "About 25 min, Colwyn Bay", t: "The National Zoo of Wales, high above Colwyn Bay with sea views.", web: "welshmountainzoo.org", url: "https://www.welshmountainzoo.org/" },
+    { n: "Anglesey Sea Zoo", d: "About 50 min, Anglesey", t: "Marine life from Welsh waters. A good rainy-day option with a lovely drive over the Menai Strait.", web: "angleseyseazoo.co.uk", url: "https://www.angleseyseazoo.co.uk/" },
+    { n: "Bodnant Garden", d: "About 30 min, Conwy Valley", t: "One of the finest gardens in Wales (National Trust), with views towards Snowdonia and a good tearoom.", web: "nationaltrust.org.uk", url: "https://www.nationaltrust.org.uk/visit/wales/bodnant-garden" } ] },
   { group: "Coast & culture", items: [
     { n: "Llandudno", d: "About 30 min", t: "Victorian seaside resort with a long promenade, a pier, and the Great Orme tramway and cable car." },
-    { n: "Conwy Castle & Town Walls", d: "About 30 min", t: "A superb medieval castle with town walls you can walk. The quayside is lovely for fish and chips." },
-    { n: "Llangollen & Pontcysyllte Aqueduct", d: "About 35 min", t: "A UNESCO World Heritage aqueduct high above the River Dee, with canal boat trips and a charming town." },
-    { n: "Yr Wyddfa (Snowdon)", d: "About 60 min", t: "Walk to the summit of Wales' highest mountain, or take the Snowdon Mountain Railway from Llanberis.", web: "snowdonrailway.co.uk" } ] }
+    { n: "Conwy Castle & Town Walls", d: "About 30 min", t: "A superb medieval castle with town walls you can walk. The quayside is lovely for fish and chips.", web: "cadw.gov.wales", url: "https://cadw.gov.wales/visit/places-to-visit/castell-conwy" },
+    { n: "Llangollen & Pontcysyllte Aqueduct", d: "About 35 min", t: "A UNESCO World Heritage aqueduct high above the River Dee, with canal boat trips and a charming town.", web: "pontcysyllte-aqueduct.co.uk", url: "https://www.pontcysyllte-aqueduct.co.uk/" },
+    { n: "Yr Wyddfa (Snowdon)", d: "About 60 min", t: "Walk to the summit of Wales' highest mountain, or take the Snowdon Mountain Railway from Llanberis.", web: "snowdonrailway.co.uk", url: "https://snowdonrailway.co.uk/" } ] }
 ];
 
 /* ====================================================================== */
@@ -330,10 +331,11 @@ function place(p, chip) {
   var meta = [];
   if (p.pc) meta.push("Postcode: <b>" + esc(p.pc) + "</b>");
   else if (p.where) meta.push("Area: <b>" + esc(p.where) + "</b>");
-  if (p.web) meta.push("Web: <b>" + esc(p.web) + "</b>");
+  if (p.web) meta.push("Web: <b>" + (p.url ? '<a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.web) + "</a>" : esc(p.web)) + "</b>");
   return '<article class="card"><div class="head-row"><h3>' + esc(p.n) + "</h3>" + (chip || "") + "</div><p>" + esc(p.t) + "</p>" + (meta.length ? '<div class="meta">' + meta.join("") + "</div>" : "") +
-    '<div class="actions">' + (p.tel ? callBtn(p.tel) : "") + '<a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(mapUrl(p)) + '" data-map="' + slug(p.n) + '" data-name="' + esc(p.n) + '">' + MAP_ICON + " Directions</a></div></article>";
+    '<div class="actions">' + (p.tel ? callBtn(p.tel) : "") + '<a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(mapUrl(p)) + '" data-map="' + slug(p.n) + '" data-name="' + esc(p.n) + '">' + MAP_ICON + " Directions</a>" + (p.url ? '<a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(p.url) + '">' + WEB_ICON + " Website</a>" : "") + "</div></article>";
 }
+var WEB_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>';
 
 var VIEWS = {
   wifi: function () {
