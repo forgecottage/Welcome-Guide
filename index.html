@@ -335,6 +335,12 @@ var WHATSON = [
     { n: "Denbigh Plum Feast", d: "October", where: "Denbigh", ll: "Denbigh Town Hall, Denbigh", t: "A day at Denbigh Town Hall celebrating the Denbigh plum, Wales' own variety, with local food and drink stalls. Usually early October." } ] }
 ];
 
+var BEACHES = [
+  { n: "Prestatyn", d: "About 25 min", where: "Prestatyn", ll: "Prestatyn Central Beach, Prestatyn", t: "The nearest beach to the cottage: miles of golden sand backed by dunes, with a promenade, cafés and play areas by the main beach. Great for long walks and kite flying." },
+  { n: "Rhos-on-Sea", d: "About 25 min", where: "Rhos-on-Sea, Colwyn Bay", ll: "Rhos-on-Sea Promenade, Rhos-on-Sea", t: "A pretty, relaxed seaside village with a little harbour, a promenade lined with cafés and ice cream, and St Trillo's, one of the smallest chapels in Britain. Sand appears at low tide, and you can stroll along the prom to Colwyn Bay." },
+  { n: "Llandudno", d: "About 30 min", where: "Llandudno", ll: "Llandudno Pier, Llandudno", t: "The classic Victorian resort. North Shore has the long promenade and the pier beneath the Great Orme, while West Shore on the other side of town is sandier and quieter, with sunset views towards Anglesey." }
+];
+
 /* ====================================================================== */
 var ICONS = {
   wifi: '<path d="M2 9a15 15 0 0 1 20 0"/><path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1"/>',
@@ -347,6 +353,7 @@ var ICONS = {
   takeaway: '<path d="M5 8h14l-1.5 12h-11z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
   treats: '<path d="M8 10a4 4 0 0 1 8 0"/><path d="M7 10h10l-5 11z"/>',
   whatson: '<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M14 14h2M8 17.5h2"/>',
+  beaches: '<circle cx="17" cy="7" r="3"/><path d="M2 15c2.5-2 4.5-2 7 0s4.5 2 7 0 4.5-2 6 0"/><path d="M2 19.5c2.5-2 4.5-2 7 0s4.5 2 7 0 4.5-2 6 0"/>',
   todo: '<path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-6h6v6"/><path d="M4 9h16"/>',
   walks: '<path d="m3 20 6-11 4 7 3-4 5 8z"/><circle cx="17" cy="6" r="2"/>',
   checkout: '<path d="M14 4h5v16h-5"/><path d="M4 12h11M11 8l4 4-4 4"/>',
@@ -366,6 +373,7 @@ var SECTIONS = [
   { id: "shops", title: "Supermarkets & shops", blurb: "Lidl, Aldi, Morrisons, Boots" },
   { id: "treats", title: "Local treats", blurb: "Farm ice cream and produce" },
   { id: "walks", title: "Walks", blurb: "Four circular hill walks" },
+  { id: "beaches", title: "Beaches", blurb: "Prestatyn, Rhos-on-Sea, Llandudno" },
   { id: "todo", title: "Things to do", blurb: "Castles, coast, adventure" },
   { id: "whatson", title: "What's on", blurb: "Markets, festivals and events" },
   { id: "checkout", title: "Check-out", blurb: "10am, and before you leave" },
@@ -492,6 +500,11 @@ var VIEWS = {
         if (!items.length) return "";
         return '<div class="sub">' + esc(g.group) + '</div><div class="grid2">' + items.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>";
       }).join("");
+  },
+  beaches: function () {
+    return '<p class="intro">Three favourite stretches of the North Wales coast, all within about half an hour of the cottage.</p><div class="grid2">' +
+      BEACHES.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>" +
+      '<div class="notice"><strong>Before you go:</strong> check the tide times, as the sea comes in quickly across the flat sands, and look out for the safety and dog signs on each beach.</div>';
   },
   todo: function () {
     return '<p class="intro">Adventure, wildlife, coast and culture, all within easy reach. Journey times are approximate by car. Please check opening times and book ahead for the busier attractions.</p>' +
