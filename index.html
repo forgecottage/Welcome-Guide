@@ -90,6 +90,14 @@ a { color: var(--forest); }
 .big-logo svg { width: 72px; height: 72px; }
 .share-card .btn { margin-top: auto; }
 a.btn, a.social-link { text-decoration: none; }
+.fb-form { gap: 10px; }
+.fb-l { font-family: var(--font-display); font-weight: 600; color: var(--forest); margin-top: 6px; }
+.fb-form textarea, .fb-form input[type=text] { font: inherit; font-size: 16px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); width: 100%; box-sizing: border-box; }
+.fb-stars { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 4px; }
+.fb-stars input { position: absolute; opacity: 0; pointer-events: none; }
+.fb-stars label { font-size: 38px; line-height: 1; color: var(--line); cursor: pointer; }
+.fb-stars input:checked ~ label, .fb-stars label:hover, .fb-stars label:hover ~ label { color: var(--gold); }
+.fb-send { align-self: flex-start; margin-top: 8px; }
 .brand-h { display: flex; align-items: center; justify-content: center; gap: 10px; }
 .brand-h svg { width: 30px; height: 30px; flex: none; }
 .share-hero .social { display: flex; gap: 12px; margin-top: 4px; }
@@ -334,6 +342,7 @@ var SECTIONS = [
   { id: "checkout", title: "Check-out", blurb: "10am, and before you leave" },
   { id: "contact", title: "Contact us", blurb: "Suzy and Arwel" },
   { id: "emergency", title: "Emergencies", blurb: "999, hospital, taxis" },
+  { id: "feedback", title: "Your feedback", blurb: "Tell us how we did", hidden: true },
   { id: "stay", title: "Share your stay", blurb: "Follow us for offers, check in and tag us", feature: true }
 ];
 
@@ -461,7 +470,17 @@ var VIEWS = {
     ];
     return '<div class="notice"><strong>Check-out is at 10am.</strong> We may ask to enter the back courtyard from 9am to start emptying the hot tub.</div>' +
       '<div class="card"><h3>Before you leave</h3><ol class="list">' + steps.map(function (s) { return "<li><b>" + s[0] + "</b> " + s[1] + "</li>"; }).join("") + "</ol></div>" +
+      '<div class="notice green"><strong>How was your stay?</strong> We\'d love your feedback. <a class="btn" style="margin-top:8px" href="#feedback">Leave feedback</a></div>' +
       "<p class=\"intro\">We hope you've had a wonderful break and will consider staying with us again. If you enjoyed your stay, we'd love a review and a tag on social media.</p>";
+  },
+  feedback: function () {
+    var stars = [5, 4, 3, 2, 1].map(function (n) { return '<input type="radio" name="fb-rating" id="fb-r' + n + '" value="' + n + '"><label for="fb-r' + n + '" title="' + n + ' star' + (n > 1 ? "s" : "") + '">★</label>'; }).join("");
+    return '<p class="intro">We\'d love to hear how your stay went. Your feedback goes straight to Suzy and Arwel and helps us make Forge Cottage even better.</p>' +
+      '<form id="fb-form" class="card fb-form"><label class="fb-l">How would you rate your stay?</label><div class="fb-stars">' + stars + '</div>' +
+      '<label class="fb-l" for="fb-love">What did you love?</label><textarea id="fb-love" rows="3"></textarea>' +
+      '<label class="fb-l" for="fb-improve">Anything we could improve?</label><textarea id="fb-improve" rows="3"></textarea>' +
+      '<label class="fb-l" for="fb-name">Your name and stay dates (optional)</label><input id="fb-name" type="text" autocomplete="name">' +
+      '<button class="btn fb-send" type="submit">Send feedback</button><p class="small">This opens your email app with your feedback ready to send to ' + esc(GUIDE.email) + '. Just tap Send.</p></form>';
   },
   contact: function () {
     return '<div class="grid2"><figure class="photo"><img src="img/hosts.jpg" alt="Arwel and Suzy during the renovation of the barn"><figcaption>Arwel &amp; Suzy during the renovation of the barn</figcaption></figure>' +
@@ -492,7 +511,8 @@ var VIEWS = {
       '<article class="share-card">' + link(GUIDE.website, '<img src="img/hills.jpg" alt="" style="width:72px;height:72px;border-radius:50%;object-fit:cover">', "social-link big-logo") + '<div><h3>Come back soon</h3><p>Book your next stay direct on our website, <b>escapetothestables.co.uk</b>.</p></div>' + link(GUIDE.website, "Visit our website") + '</article>' +
       '</div>' +
       '<div class="notice"><strong>Photo ideas:</strong> the hot tub under the stars, Forge Cottage lit up at night, sunset over the Clwydian Range, a cosy evening by the wood stove, or a cone from Chilly Cow.</div>' +
-      "<p class=\"intro\">Had a lovely time? A review means the world to us, and helps other guests find us.</p>";
+      "<p class=\"intro\">Had a lovely time? A review means the world to us, and helps other guests find us.</p>" +
+      '<div class="actions"><a class="btn map-btn" href="#feedback">Send us your feedback</a></div>';
   }
 };
 function taxi() { return '<div class="notice green"><strong>Need a taxi?</strong> City Cabs: <b>' + telLink("01745 582 277") + '</b>. Please give clear directions, as our postcode doesn\'t take you right to the property. Use <span class="mono">' + GUIDE.location.gps + '</span> or what3words <span class="mono">' + GUIDE.location.w3w + "</span>.</div>"; }
@@ -514,6 +534,14 @@ function render() {
   document.getElementById("app").innerHTML = VIEWS[id] ? section(id) : home();
   window.scrollTo(0, 0);
 }
+document.addEventListener("submit", function (e) {
+  if (e.target.id !== "fb-form") return;
+  e.preventDefault();
+  var r = document.querySelector('input[name="fb-rating"]:checked');
+  var v = function (id) { return document.getElementById(id).value.trim(); };
+  var body = "Rating: " + (r ? r.value + " out of 5" : "not given") + "\n\nWhat we loved:\n" + (v("fb-love") || "-") + "\n\nCould be improved:\n" + (v("fb-improve") || "-") + "\n\nName / dates: " + (v("fb-name") || "-");
+  location.href = "mailto:" + GUIDE.email + "?subject=" + encodeURIComponent("Guest feedback - Forge Cottage") + "&body=" + encodeURIComponent(body);
+});
 document.addEventListener("click", function (e) {
   var so = e.target.closest ? e.target.closest("[data-social]") : null;
   if (so) { e.preventDefault(); e.stopPropagation(); var k = so.getAttribute("data-social"), url = GUIDE[k];
