@@ -115,8 +115,12 @@ ul.list { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
 .qr-card b { font-family: var(--font-display); font-size: 18px; color: var(--forest); }
 .pending { width: 132px; height: 132px; border: 2px dashed var(--line); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--muted); padding: 10px; }
 .tbc { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; background: #fff3b0; color: #6b5400; padding: 2px 7px; border-radius: 4px; }
-.map-btn { text-decoration: none; }
-.map-btn { align-self: flex-start; margin-top: 4px; padding: 8px 14px; font-size: 15px; background: var(--ok-bg); color: var(--forest); }
+.map-btn, .call-btn { text-decoration: none; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.call-btn { padding: 8px 14px; font-size: 15px; background: var(--forest); color: #fff; }
+a.tel { color: inherit; text-decoration: none; }
+@media (max-width: 699px) { a.tel { text-decoration: underline; } }
+.map-btn { align-self: flex-start; padding: 8px 14px; font-size: 15px; background: var(--ok-bg); color: var(--forest); }
 .modal { position: fixed; inset: 0; z-index: 20; background: rgba(20,32,26,.55); display: flex; align-items: center; justify-content: center; padding: 20px; }
 [hidden] { display: none !important; }
 .modal-box { background: var(--card); border-radius: var(--radius); padding: 28px; max-width: 360px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
@@ -251,21 +255,24 @@ function mapUrl(p) {
   return "https://www.google.com/maps/dir/?api=1&origin=" + GUIDE.location.gps.replace(/\s/g, "") + "&destination=" + encodeURIComponent(dest);
 }
 function isPhone() { return window.innerWidth < 700; }
+var PHONE_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>';
+/* Phone numbers: tap to call on a phone; on the iPad they just show the number */
+function callBtn(num) { return '<a class="btn call-btn" data-tel href="tel:' + num.replace(/\s/g, "") + '">' + PHONE_ICON + " " + esc(num) + "</a>"; }
+function telLink(num) { return '<a class="tel" data-tel href="tel:' + num.replace(/\s/g, "") + '">' + esc(num) + "</a>"; }
 function slug(n) { return n.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
 var MAP_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>';
 function icon(id) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICONS[id] + "</svg>"; }
 /* QR codes are image files in img/ (qr-wifi, qr-facebook, qr-instagram, qr-website, qr-signup) */
 function qr(name, size) { return '<div class="qr"><img src="img/qr-' + name + '.png" width="' + size + '" height="' + size + '" alt="QR code"></div>'; }
-function hostsLine() { return GUIDE.hosts.map(function (h) { return h.name + ": <b>" + esc(h.phone) + "</b>"; }).join(" &nbsp;·&nbsp; "); }
+function hostsLine() { return GUIDE.hosts.map(function (h) { return h.name + ": <b>" + telLink(h.phone) + "</b>"; }).join(" &nbsp;·&nbsp; "); }
 
 function place(p, chip) {
   var meta = [];
   if (p.pc) meta.push("Postcode: <b>" + esc(p.pc) + "</b>");
   else if (p.where) meta.push("Area: <b>" + esc(p.where) + "</b>");
-  if (p.tel) meta.push("Tel: <b>" + esc(p.tel) + "</b>");
   if (p.web) meta.push("Web: <b>" + esc(p.web) + "</b>");
   return '<article class="card"><div class="head-row"><h3>' + esc(p.n) + "</h3>" + (chip || "") + "</div><p>" + esc(p.t) + "</p>" + (meta.length ? '<div class="meta">' + meta.join("") + "</div>" : "") +
-    '<a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(mapUrl(p)) + '" data-map="' + slug(p.n) + '" data-name="' + esc(p.n) + '">' + MAP_ICON + " Directions</a></article>";
+    '<div class="actions">' + (p.tel ? callBtn(p.tel) : "") + '<a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(mapUrl(p)) + '" data-map="' + slug(p.n) + '" data-name="' + esc(p.n) + '">' + MAP_ICON + " Directions</a></div></article>";
 }
 
 var VIEWS = {
@@ -339,7 +346,7 @@ var VIEWS = {
   contact: function () {
     return '<div class="grid2"><figure class="photo"><img src="img/hosts.jpg" alt="Arwel and Suzy during the renovation of the barn"><figcaption>Arwel &amp; Suzy during the renovation of the barn</figcaption></figure>' +
       '<div class="card"><h3>Need to speak to us?</h3><p>We have been renovating Forge Cottage since February 2018. It has been converted with love and care, and we\'d appreciate it if you would respect our home as you would your own.</p>' +
-      GUIDE.hosts.map(function (h) { return '<p style="font-size:20px">' + h.name + ': <b style="color:var(--forest)">' + esc(h.phone) + "</b></p>"; }).join("") +
+      GUIDE.hosts.map(function (h) { return '<p style="font-size:20px">' + h.name + ': ' + callBtn(h.phone) + "</p>"; }).join("") +
       "<p>Email: <b>" + esc(GUIDE.email) + "</b></p></div></div>" +
       '<div class="notice green"><strong>Finding us:</strong> postcode ' + GUIDE.location.postcode + ' doesn\'t lead to the door. Use GPS <span class="mono">' + GUIDE.location.gps + '</span> or what3words <span class="mono">' + GUIDE.location.w3w + "</span>.</div>";
   },
@@ -347,7 +354,7 @@ var VIEWS = {
     return '<div class="notice warn"><strong>In an emergency, call 999.</strong> Tell them our GPS location <span class="mono">' + GUIDE.location.gps + '</span> or what3words <span class="mono">' + GUIDE.location.w3w + "</span>, because the postcode doesn't lead to the door.</div>" +
       '<div class="grid2">' +
       '<article class="card"><h3>Nearest A&amp;E</h3><p>Ysbyty Glan Clwyd, Bodelwyddan, LL18 5UJ. About 20 minutes by car.</p></article>' +
-      '<article class="card"><h3>Minor injuries: Denbigh Infirmary</h3><p>Minor Injury Unit for cuts, sprains, minor burns and possible broken bones. Ruthin Road, Denbigh, LL16 3ES, about 10 minutes away.</p><div class="meta">Open: <b>8am to 6pm, Monday to Friday</b> Tel: <b>03000 855776</b></div><p class="small">Closed at weekends and on bank holidays. Please call before you go.</p></article>' +
+      '<article class="card"><h3>Minor injuries: Denbigh Infirmary</h3><p>Minor Injury Unit for cuts, sprains, minor burns and possible broken bones. Ruthin Road, Denbigh, LL16 3ES, about 10 minutes away.</p><div class="meta">Open: <b>8am to 6pm, Monday to Friday</b> Tel: <b>' + telLink("03000 855776") + '</b></div><p class="small">Closed at weekends and on bank holidays. Please call before you go.</p></article>' +
       '<article class="card"><h3>Non-urgent medical help</h3><p>Call <b>111</b> (NHS 111 Wales), free from any phone, 24 hours a day.</p></article>' +
       '<article class="card"><h3>Nearest pharmacy</h3><p>In Denbigh town centre, about 5 minutes away. <span class="tbc">To confirm</span></p></article>' +
       '<article class="card"><h3>Fuse box &amp; water stopcock</h3><p>Location to be added. <span class="tbc">To confirm</span></p></article>' +
@@ -367,7 +374,7 @@ var VIEWS = {
       "<p class=\"intro\">Had a lovely time? A review means the world to us, and helps other guests find us.</p>";
   }
 };
-function taxi() { return '<div class="notice green"><strong>Need a taxi?</strong> City Cabs: <b>01745 582 277</b>. Please give clear directions, as our postcode doesn\'t take you right to the property. Use <span class="mono">' + GUIDE.location.gps + '</span> or what3words <span class="mono">' + GUIDE.location.w3w + "</span>.</div>"; }
+function taxi() { return '<div class="notice green"><strong>Need a taxi?</strong> City Cabs: <b>' + telLink("01745 582 277") + '</b>. Please give clear directions, as our postcode doesn\'t take you right to the property. Use <span class="mono">' + GUIDE.location.gps + '</span> or what3words <span class="mono">' + GUIDE.location.w3w + "</span>.</div>"; }
 
 function home() {
   return '<header class="hero"><img class="hero-bg" src="img/hills.jpg" alt=""><div class="wrap"><div><div class="place">' + GUIDE.cottage + " · " + GUIDE.area + '</div><h1>Welcome to<br><em>' + GUIDE.brand + '</em></h1><p class="lede">We\'re so glad you\'re here. Tap a tile below for anything you need during your stay.</p></div>' +
@@ -388,6 +395,7 @@ function render() {
 }
 document.addEventListener("click", function (e) {
   var m = e.target.closest ? e.target.closest("[data-map]") : null;
+  if (e.target.closest && e.target.closest("[data-tel]") && !isPhone()) { e.preventDefault(); return; }
   if (m && isPhone()) return;
   if (m) { e.preventDefault(); document.getElementById("map-title").textContent = m.getAttribute("data-name"); document.getElementById("map-qr").src = "img/map/" + m.getAttribute("data-map") + ".png"; document.getElementById("map-modal").hidden = false; return; }
   if (e.target.id === "map-close" || e.target.id === "map-modal") { document.getElementById("map-modal").hidden = true; return; }
