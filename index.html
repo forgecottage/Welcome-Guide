@@ -338,7 +338,8 @@ var WHATSON = [
 var BEACHES = [
   { n: "Prestatyn", d: "About 25 min", where: "Prestatyn", ll: "Prestatyn Central Beach, Prestatyn", t: "The nearest beach to the cottage: miles of golden sand backed by dunes, with a promenade, cafés and play areas by the main beach. Great for long walks and kite flying." },
   { n: "Rhos-on-Sea", d: "About 25 min", where: "Rhos-on-Sea, Colwyn Bay", ll: "Rhos-on-Sea Promenade, Rhos-on-Sea", t: "A pretty, relaxed seaside village with a little harbour, a promenade lined with cafés and ice cream, and St Trillo's, one of the smallest chapels in Britain. Sand appears at low tide, and you can stroll along the prom to Colwyn Bay." },
-  { n: "Llandudno", d: "About 30 min", where: "Llandudno", ll: "Llandudno Pier, Llandudno", t: "The classic Victorian resort. North Shore has the long promenade and the pier beneath the Great Orme, while West Shore on the other side of town is sandier and quieter, with sunset views towards Anglesey." }
+  { n: "Llandudno", d: "About 30 min", where: "Llandudno", ll: "Llandudno Pier, Llandudno", t: "The classic Victorian resort. North Shore has the long promenade and the pier beneath the Great Orme, while West Shore on the other side of town is sandier and quieter, with sunset views towards Anglesey." },
+  { n: "Conwy", d: "About 30 min", where: "Conwy", ll: "Conwy Quay, Conwy", t: "Not a beach, but a lovely place to visit on the way along the coast. Walk the medieval town walls, see the castle, and wander down to the quay to find the Smallest House in Great Britain, a tiny red cottage just 1.8 metres wide. Fish and chips on the harbour wall is a must." }
 ];
 
 /* ====================================================================== */
@@ -373,7 +374,7 @@ var SECTIONS = [
   { id: "shops", title: "Supermarkets & shops", blurb: "Lidl, Aldi, Morrisons, Boots" },
   { id: "treats", title: "Local treats", blurb: "Farm ice cream and produce" },
   { id: "walks", title: "Walks", blurb: "Four circular hill walks" },
-  { id: "beaches", title: "Beaches", blurb: "Prestatyn, Rhos-on-Sea, Llandudno" },
+  { id: "beaches", title: "Beaches", blurb: "Prestatyn, Rhos-on-Sea, Llandudno, Conwy" },
   { id: "todo", title: "Things to do", blurb: "Castles, coast, adventure" },
   { id: "whatson", title: "What's on", blurb: "Markets, festivals and events" },
   { id: "checkout", title: "Check-out", blurb: "10am, and before you leave" },
@@ -502,7 +503,7 @@ var VIEWS = {
       }).join("");
   },
   beaches: function () {
-    return '<p class="intro">Three favourite stretches of the North Wales coast, all within about half an hour of the cottage.</p><div class="grid2">' +
+    return '<p class="intro">Our favourite spots on the North Wales coast, all within about half an hour of the cottage.</p><div class="grid2">' +
       BEACHES.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>" +
       '<div class="notice"><strong>Before you go:</strong> check the tide times, as the sea comes in quickly across the flat sands, and look out for the safety and dog signs on each beach.</div>';
   },
