@@ -347,7 +347,7 @@ var SECTIONS = [
   { id: "contact", title: "Contact us", blurb: "Suzy and Arwel" },
   { id: "emergency", title: "Emergencies", blurb: "999, hospital, taxis" },
   { id: "stay", title: "Share your stay", blurb: "Follow us for offers, check in and tag us", feature: true },
-  { id: "feedback", title: "Leave us feedback", blurb: "Tell us how we did, it only takes a minute", feature: true, alt: true }
+  { id: "feedback", title: "Suggestions & feedback", blurb: "Tell us what you loved, or what we could do better", feature: true, alt: true }
 ];
 
 function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -474,17 +474,14 @@ var VIEWS = {
     ];
     return '<div class="notice"><strong>Check-out is at 10am.</strong> We may ask to enter the back courtyard from 9am to start emptying the hot tub.</div>' +
       '<div class="card"><h3>Before you leave</h3><ol class="list">' + steps.map(function (s) { return "<li><b>" + s[0] + "</b> " + s[1] + "</li>"; }).join("") + "</ol></div>" +
-      '<div class="notice green"><strong>How was your stay?</strong> We\'d love your feedback. <a class="btn" style="margin-top:8px" href="#feedback">Leave feedback</a></div>' +
+      '<div class="notice green"><strong>Any suggestions?</strong> We\'d love to hear them. <a class="btn" style="margin-top:8px" href="#feedback">Send a suggestion</a></div>' +
       "<p class=\"intro\">We hope you've had a wonderful break and will consider staying with us again. If you enjoyed your stay, we'd love a review and a tag on social media.</p>";
   },
   feedback: function () {
-    var stars = [5, 4, 3, 2, 1].map(function (n) { return '<input type="radio" name="fb-rating" id="fb-r' + n + '" value="' + n + '"><label for="fb-r' + n + '" title="' + n + ' star' + (n > 1 ? "s" : "") + '">★</label>'; }).join("");
-    return '<p class="intro">We\'d love to hear how your stay went. Your feedback goes straight to Suzy and Arwel and helps us make Forge Cottage even better.</p>' +
-      '<form id="fb-form" class="card fb-form"><label class="fb-l">How would you rate your stay?</label><div class="fb-stars">' + stars + '</div>' +
-      '<label class="fb-l" for="fb-love">What did you love?</label><textarea id="fb-love" rows="3"></textarea>' +
-      '<label class="fb-l" for="fb-improve">Anything we could improve?</label><textarea id="fb-improve" rows="3"></textarea>' +
-      '<label class="fb-l" for="fb-name">Your name and stay dates (optional)</label><input id="fb-name" type="text" autocomplete="name">' +
-      '<button class="btn fb-send" type="submit">Send feedback</button><p class="small">This opens your email app with your feedback ready to send to ' + esc(GUIDE.email) + '. Just tap Send.</p></form>';
+    return '<p class="intro">Got a suggestion, or something you loved? Let us know. Every note helps us make Forge Cottage even better.</p>' +
+      '<form id="fb-form" class="card fb-form"><label class="fb-l" for="fb-text">Your suggestions or feedback</label><textarea id="fb-text" rows="6" placeholder="e.g. More mugs in the kitchen, or the hot tub was perfect!"></textarea>' +
+      '<label class="fb-l" for="fb-name">Your name (optional)</label><input id="fb-name" type="text" autocomplete="name">' +
+      '<button class="btn fb-send" type="submit">Send</button><p class="small">This opens your email with your message ready to go. Just tap Send.</p></form>';
   },
   contact: function () {
     return '<div class="grid2"><figure class="photo"><img src="img/hosts.jpg" alt="Arwel and Suzy during the renovation of the barn"><figcaption>Arwel &amp; Suzy during the renovation of the barn</figcaption></figure>' +
@@ -516,7 +513,7 @@ var VIEWS = {
       '</div>' +
       '<div class="notice"><strong>Photo ideas:</strong> the hot tub under the stars, Forge Cottage lit up at night, sunset over the Clwydian Range, a cosy evening by the wood stove, or a cone from Chilly Cow.</div>' +
       "<p class=\"intro\">Had a lovely time? A review means the world to us, and helps other guests find us.</p>" +
-      '<div class="actions"><a class="btn map-btn" href="#feedback">Send us your feedback</a></div>';
+      '<div class="actions"><a class="btn map-btn" href="#feedback">Send us a suggestion</a></div>';
   }
 };
 function taxi() { return '<div class="notice green"><strong>Need a taxi?</strong> City Cabs: <b>' + telLink("01745 582 277") + '</b>. Please give clear directions, as our postcode doesn\'t take you right to the property. Use <span class="mono">' + GUIDE.location.gps + '</span> or what3words <span class="mono">' + GUIDE.location.w3w + "</span>.</div>"; }
@@ -541,10 +538,10 @@ function render() {
 document.addEventListener("submit", function (e) {
   if (e.target.id !== "fb-form") return;
   e.preventDefault();
-  var r = document.querySelector('input[name="fb-rating"]:checked');
   var v = function (id) { return document.getElementById(id).value.trim(); };
-  var body = "Rating: " + (r ? r.value + " out of 5" : "not given") + "\n\nWhat we loved:\n" + (v("fb-love") || "-") + "\n\nCould be improved:\n" + (v("fb-improve") || "-") + "\n\nName / dates: " + (v("fb-name") || "-");
-  location.href = "mailto:" + GUIDE.email + "?subject=" + encodeURIComponent("Guest feedback - Forge Cottage") + "&body=" + encodeURIComponent(body);
+  if (!v("fb-text")) { document.getElementById("fb-text").focus(); return; }
+  var body = v("fb-text") + (v("fb-name") ? "\n\nFrom: " + v("fb-name") : "");
+  location.href = "mailto:" + GUIDE.email + "?subject=" + encodeURIComponent("Suggestions & feedback - Forge Cottage") + "&body=" + encodeURIComponent(body);
 });
 document.addEventListener("click", function (e) {
   var so = e.target.closest ? e.target.closest("[data-social]") : null;
