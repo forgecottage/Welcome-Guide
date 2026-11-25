@@ -54,6 +54,9 @@ a { color: var(--forest); }
 .hero .lede { margin-top: 10px; max-width: 30em; opacity: .92; }
 .wifi-card { background: rgba(255,255,255,.96); color: var(--ink); border-radius: var(--radius); padding: 16px 18px; display: flex; gap: 16px; align-items: center; }
 .wifi-card .net { font-family: var(--font-display); font-size: 20px; color: var(--forest); font-weight: 600; }
+.wifi-card .scan-tip { margin-top: 8px; font-size: 14px; line-height: 1.35; max-width: 19em; color: var(--muted); }
+.wifi-card .scan-tip b { color: var(--forest); }
+.scan-steps { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
 .wifi-card .pw { font-family: ui-monospace, Menlo, monospace; font-size: 18px; background: var(--gold-soft); padding: 2px 8px; border-radius: 6px; letter-spacing: .03em; }
 .qr { background: #fff; padding: 6px; border-radius: 8px; line-height: 0; flex: none; }
 .qr img, .qr canvas { display: block; }
@@ -141,6 +144,12 @@ a.tel { color: inherit; text-decoration: none; }
 .share-card p { font-size: 15px; }
 @media (max-width: 760px) { .share-grid { grid-template-columns: 1fr; } }
 .walk h3 { font-size: 22px; }
+.walk { padding-top: 0; overflow: hidden; }
+.walk-photo { margin: 0 -20px 6px; position: relative; }
+.walk-photo img { display: block; width: 100%; height: 240px; object-fit: cover; background: var(--stone); }
+.walk-photo figcaption { position: absolute; right: 8px; bottom: 6px; font-size: 11px; color: #fff; background: rgba(0,0,0,.45); padding: 2px 8px; border-radius: 8px; }
+.walk-photo figcaption a { color: inherit; text-decoration: none; }
+@media (max-width: 600px) { .walk-photo img { height: 190px; } }
 .walk-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 4px 0; }
 .walk-stats div { background: var(--stone); border-radius: 10px; padding: 10px 12px; }
 .walk-stats dt { font-family: var(--font-display); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
@@ -206,16 +215,16 @@ var TREATS = [
 
 ];
 var WALKS = [
-  { n: "Coed Llangwyfan Forest Walk", slug: "walk-coed-llangwyfan", route: "https://cdnfd.cyfoethnaturiol.cymru/690184/clwydian-range-dee-valley-leaflet-en.pdf", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "1.9 miles (3 km)", time: "About 1½ hours", type: "Moderate, forest tracks",
+  { n: "Coed Llangwyfan Forest Walk", slug: "walk-coed-llangwyfan", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Woodland_track_in_Coed_Llangwyfan_-_geograph.org.uk_-_7208599.jpg/960px-Woodland_track_in_Coed_Llangwyfan_-_geograph.org.uk_-_7208599.jpg", alt: "Woodland track in Coed Llangwyfan", credit: "John H Darch, CC BY-SA 2.0", creditUrl: "https://commons.wikimedia.org/wiki/File:Woodland_track_in_Coed_Llangwyfan_-_geograph.org.uk_-_7208599.jpg", route: "https://cdnfd.cyfoethnaturiol.cymru/690184/clwydian-range-dee-valley-leaflet-en.pdf", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "1.9 miles (3 km)", time: "About 1½ hours", type: "Moderate, forest tracks",
     t: "A waymarked loop through the conifer forest on the side of the Clwydian Range, with glimpses back across the Vale of Clwyd. A good choice for a shorter walk or a wet day.",
     park: "Coed Llangwyfan car park (free), postcode CH7 5RP. About 10 minutes' drive from the cottage. No toilets." },
-  { n: "Penycloddiau Hillfort and Offa's Dyke", slug: "walk-penycloddiau", route: "https://naturalresourceswales.gov.uk/days-out/places-to-visit/north-east-wales/coed-llangwyfan?lang=en", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "2.5 miles (4 km)", time: "About 1½ to 2 hours", type: "Moderate, hill paths",
+  { n: "Penycloddiau Hillfort and Offa's Dyke", slug: "walk-penycloddiau", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Bryngaer_Penycloddiau_Hillfort%3B_Bryniau_Clwyd%3B_Gogledd_Cymru_North_Wales_10.JPG/960px-Bryngaer_Penycloddiau_Hillfort%3B_Bryniau_Clwyd%3B_Gogledd_Cymru_North_Wales_10.JPG", alt: "Heather on Penycloddiau hillfort", credit: "Llywelyn2000, CC BY-SA 3.0", creditUrl: "https://commons.wikimedia.org/wiki/File:Bryngaer_Penycloddiau_Hillfort;_Bryniau_Clwyd;_Gogledd_Cymru_North_Wales_10.JPG", route: "https://naturalresourceswales.gov.uk/days-out/places-to-visit/north-east-wales/coed-llangwyfan?lang=en", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "2.5 miles (4 km)", time: "About 1½ to 2 hours", type: "Moderate, hill paths",
     t: "Follow Offa's Dyke Path up from the forest to Penycloddiau, one of the largest Iron Age hillforts in Wales, then loop back down. Big views over the Vale of Clwyd on a clear day.",
     park: "Coed Llangwyfan car park (free), postcode CH7 5RP. The path isn't fully waymarked, so take a map or phone." },
-  { n: "Moel Arthur Circular", slug: "walk-moel-arthur", route: "https://naturalresourceswales.gov.uk/days-out/places-to-visit/north-east-wales/coed-llangwyfan?lang=en", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "4 miles (6.6 km)", time: "About 2½ hours", type: "Moderate, hill paths",
+  { n: "Moel Arthur Circular", slug: "walk-moel-arthur", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Moel_Arthur%2C_Sir_Ddinbych_04.JPG/960px-Moel_Arthur%2C_Sir_Ddinbych_04.JPG", alt: "Moel Arthur rising above the pass", credit: "Llywelyn2000, CC BY-SA 3.0", creditUrl: "https://commons.wikimedia.org/wiki/File:Moel_Arthur,_Sir_Ddinbych_04.JPG", route: "https://naturalresourceswales.gov.uk/days-out/places-to-visit/north-east-wales/coed-llangwyfan?lang=en", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "4 miles (6.6 km)", time: "About 2½ hours", type: "Moderate, hill paths",
     t: "Head south along the ridge on Offa's Dyke Path to Moel Arthur, a steep little hill crowned by an Iron Age fort, and return through the forest. One of the best views in the Clwydian Range.",
     park: "Coed Llangwyfan car park (free), postcode CH7 5RP. The route isn't fully waymarked, so take a map or phone." },
-  { n: "Moel Famau and the Jubilee Tower", slug: "walk-moel-famau", route: "https://cdnfd.cyfoethnaturiol.cymru/690184/clwydian-range-dee-valley-leaflet-en.pdf", dest: "Moel Famau car park, Bwlch Penbarras, CH7 5SH", dist: "3.6 miles (5.8 km)", time: "About 2½ hours", type: "Moderate, 280 m climb",
+  { n: "Moel Famau and the Jubilee Tower", slug: "walk-moel-famau", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Jubilee_Tower%2C_Moel_Famau_-_geograph.org.uk_-_3645115.jpg/960px-Jubilee_Tower%2C_Moel_Famau_-_geograph.org.uk_-_3645115.jpg", alt: "The Jubilee Tower on the summit of Moel Famau", credit: "Jeff Buck, CC BY-SA 2.0", creditUrl: "https://commons.wikimedia.org/wiki/File:Jubilee_Tower,_Moel_Famau_-_geograph.org.uk_-_3645115.jpg", route: "https://cdnfd.cyfoethnaturiol.cymru/690184/clwydian-range-dee-valley-leaflet-en.pdf", dest: "Moel Famau car park, Bwlch Penbarras, CH7 5SH", dist: "3.6 miles (5.8 km)", time: "About 2½ hours", type: "Moderate, 280 m climb",
     t: "The classic Clwydian walk. A waymarked loop climbs steeply but steadily to the Jubilee Tower on the summit of Moel Famau, the highest point in the range, with views to Snowdonia, the coast and on a clear day Liverpool.",
     park: "Moel Famau car park, Bwlch Penbarras, postcode CH7 5SH (it covers a wide area). About 20 minutes' drive. Pay by card or contactless: £2.50 for 3 hours, £6 all day. Toilets on site." }
 ];
@@ -305,7 +314,7 @@ function place(p, chip) {
 var VIEWS = {
   wifi: function () {
     return '<div class="card" style="flex-direction:row;flex-wrap:wrap;gap:24px;align-items:center">' + qr('wifi', 180) +
-      '<div style="display:grid;gap:10px;min-width:0"><div class="eyebrow">Free Wi-Fi</div><div>Network<br><span style="font-family:var(--font-display);font-size:28px;color:var(--forest);font-weight:600">' + esc(GUIDE.wifi.network) + '</span></div><div>Password<br><span class="mono" style="font-size:24px">' + esc(GUIDE.wifi.password) + '</span></div><p class="small">Point your phone camera at the code to join without typing.</p></div></div>';
+      '<div style="display:grid;gap:10px;min-width:0"><div class="eyebrow">Free Wi-Fi</div><div>Network<br><span style="font-family:var(--font-display);font-size:28px;color:var(--forest);font-weight:600">' + esc(GUIDE.wifi.network) + '</span></div><div>Password<br><span class="mono" style="font-size:24px">' + esc(GUIDE.wifi.password) + '</span></div><ol class="scan-steps"><li>Open the <b>camera</b> app on your phone (no special app needed).</li><li>Hold it over the code for a second or two, so the whole square is on screen.</li><li>Tap the <b>Join network</b> message that pops up. You\'re connected.</li></ol><p class="small">Code not working? Go to Wi-Fi in your phone\'s settings, choose ' + esc(GUIDE.wifi.network) + ' and type the password.</p></div></div>';
   },
   rules: function () {
     var r = ["No smoking", "No parties (maximum 4 guests)", "No pets", "No outdoor music after 8.30pm", "Respect our neighbours", "Please report any damage"];
@@ -355,7 +364,7 @@ var VIEWS = {
   walks: function () {
     return '<p class="intro">Four circular walks in the Clwydian Range, all a short drive from the cottage, from a forest loop to the summit of Moel Famau.</p>' +
       WALKS.map(function (w, i) {
-        return '<article class="card walk"><div class="eyebrow">Walk ' + (i + 1) + ' · Circular</div><h3>' + esc(w.n) + '</h3>' +
+        return '<article class="card walk">' + (w.img ? '<figure class="walk-photo"><img loading="lazy" src="' + esc(w.img) + '" alt="' + esc(w.alt) + '"><figcaption>Photo: <a href="' + esc(w.creditUrl) + '" target="_blank" rel="noopener">' + esc(w.credit) + '</a></figcaption></figure>' : '') + '<div class="eyebrow">Walk ' + (i + 1) + ' · Circular</div><h3>' + esc(w.n) + '</h3>' +
           '<dl class="walk-stats"><div><dt>Distance</dt><dd>' + esc(w.dist) + '</dd></div><div><dt>Time</dt><dd>' + esc(w.time) + '</dd></div><div><dt>Grade</dt><dd>' + esc(w.type) + '</dd></div></dl>' +
           '<p>' + esc(w.t) + '</p><p class="small"><b>Where to park:</b> ' + esc(w.park) + '</p>' +
           '<div class="actions"><a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(walkUrl(w)) + '" data-map="' + w.slug + '" data-name="' + esc(w.n) + '">' + MAP_ICON + ' Directions to the car park</a>' +
@@ -416,7 +425,7 @@ function taxi() { return '<div class="notice green"><strong>Need a taxi?</strong
 
 function home() {
   return '<header class="hero"><img class="hero-bg" src="img/hills.jpg" alt=""><div class="wrap"><div><div class="place">' + GUIDE.cottage + " · " + GUIDE.area + '</div><h1>Welcome to<br><em>' + GUIDE.brand + '</em></h1><p class="lede">We\'re so glad you\'re here. Tap a tile below for anything you need during your stay.</p></div>' +
-    '<div class="wifi-card">' + qr('wifi', 96) + '<div><div class="eyebrow">Free Wi-Fi</div><div class="net">' + esc(GUIDE.wifi.network) + '</div><div style="margin-top:4px"><span class="pw">' + esc(GUIDE.wifi.password) + "</span></div></div></div></div></header>" +
+    '<div class="wifi-card">' + qr('wifi', 96) + '<div><div class="eyebrow">Free Wi-Fi</div><div class="net">' + esc(GUIDE.wifi.network) + '</div><div style="margin-top:4px"><span class="pw">' + esc(GUIDE.wifi.password) + '</span></div><p class="scan-tip">' + (isPhone() ? 'Go to Wi-Fi in your phone\'s settings, pick ' + esc(GUIDE.wifi.network) + ' and type the password.' : '<b>To join:</b> open your phone\'s camera, hold it over this code for a second, then tap the Wi-Fi message that pops up.') + "</p></div></div></div></header>" +
     '<div class="wrap"><nav class="tiles" aria-label="Guest guide sections">' +
     SECTIONS.map(function (s) { return '<button class="tile' + (s.feature ? " feature" : "") + '" data-go="' + s.id + '">' + icon(s.id) + "<b>" + s.title + "</b><span>" + s.blurb + "</span></button>"; }).join("") +
     '</nav><div class="foot"><span>Need us? ' + hostsLine() + "</span><span>" + esc(GUIDE.email) + "</span></div></div>";
