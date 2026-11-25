@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Forge Cottage Welcome</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: a home screen of large touch tiles over a hillside hero; each tile opens a full-screen section with a fixed Home bar. Built for an iPad on a stand, works on phones too. */
+:root {
+  --forest: #2e4a3b;      /* brand green from the printed guide */
+  --forest-deep: #1f3329;
+  --gold: #b8913f;        /* brand gold */
+  --gold-soft: #f3e7c8;
+  --stone: #f7f4ee;       /* page ground, warm stone */
+  --card: #ffffff;
+  --ink: #26302a;
+  --muted: #5f6a63;
+  --line: #e3ddd1;
+  --warn-bg: #fdf1ec;
+  --warn: #a2432a;
+  --ok-bg: #e7f0ea;
+  --font-display: "Lora", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --radius: 14px;
+  color-scheme: light;
+}
+html, body { height: 100%; }
+body {
+  background: var(--stone); color: var(--ink);
+  font-family: var(--font-body); font-size: 17px; line-height: 1.55;
+  -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none; user-select: none;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; color: var(--forest); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: var(--forest); }
+.eyebrow { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+
+/* Hero */
+.hero { position: relative; color: #fff; background: var(--forest-deep); overflow: hidden; }
+.hero .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+.hero .wrap { position: relative; padding-block: 44px 36px; display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-end; justify-content: space-between; }
+.hero h1 { color: #fff; font-size: clamp(32px, 5vw, 52px); line-height: 1.1; }
+.hero h1 em { color: var(--gold-soft); font-style: italic; font-weight: 500; }
+.hero .place { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; opacity: .85; margin-bottom: 10px; }
+.hero .lede { margin-top: 10px; max-width: 30em; opacity: .92; }
+.wifi-card { background: rgba(255,255,255,.96); color: var(--ink); border-radius: var(--radius); padding: 16px 18px; display: flex; gap: 16px; align-items: center; }
+.wifi-card .net { font-family: var(--font-display); font-size: 20px; color: var(--forest); font-weight: 600; }
+.wifi-card .pw { font-family: ui-monospace, Menlo, monospace; font-size: 18px; background: var(--gold-soft); padding: 2px 8px; border-radius: 6px; letter-spacing: .03em; }
+.qr { background: #fff; padding: 6px; border-radius: 8px; line-height: 0; flex: none; }
+.qr img, .qr canvas { display: block; }
+.small { font-size: 13px; color: var(--muted); }
+
+/* Tiles */
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding-block: 24px 28px; }
+.tile { appearance: none; border: 1px solid var(--line); background: var(--card); border-radius: var(--radius); padding: 18px 16px; text-align: left; font: inherit; color: var(--ink); cursor: pointer; display: flex; flex-direction: column; gap: 6px; min-height: 118px; }
+.tile:active { transform: scale(.98); background: var(--gold-soft); }
+.tile:focus-visible, .btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.tile svg { width: 30px; height: 30px; stroke: var(--forest); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.tile b { font-family: var(--font-display); font-size: 19px; color: var(--forest); font-weight: 600; }
+.tile span { font-size: 14px; color: var(--muted); line-height: 1.35; }
+.tile.feature { background: var(--forest); border-color: var(--forest); }
+.tile.feature b, .tile.feature span { color: #fff; }
+.tile.feature svg { stroke: var(--gold-soft); }
+@media (max-width: 860px) { .tiles { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px) { .tiles { grid-template-columns: repeat(2, 1fr); } .wifi-card { width: 100%; } }
+
+.foot { border-top: 1px solid var(--line); padding-block: 18px 28px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; font-size: 14px; color: var(--muted); }
+
+/* Section view */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--forest); color: #fff; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--forest); }
+.bar .wrap { display: flex; align-items: center; gap: 16px; padding-block: 12px; }
+.btn { appearance: none; border: 0; border-radius: 999px; font: inherit; font-weight: 600; cursor: pointer; padding: 10px 18px; background: var(--gold-soft); color: var(--forest-deep); display: inline-flex; align-items: center; gap: 8px; }
+.bar h2 { color: #fff; font-size: 22px; }
+.view { padding-block: 24px 48px; display: grid; gap: 22px; }
+.intro { color: var(--muted); max-width: 42em; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 760px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.card h3 { font-size: 20px; }
+.card .meta { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; color: var(--muted); }
+.card .meta b { color: var(--forest); font-weight: 600; }
+.head-row { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.chip { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--gold-soft); color: #7a5d1f; white-space: nowrap; }
+.chip.green { background: var(--ok-bg); color: var(--forest); }
+.sub { font-family: var(--font-body); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 600; display: flex; align-items: center; gap: 12px; }
+.sub::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.notice { border-radius: var(--radius); padding: 16px 20px; background: var(--gold-soft); border-left: 4px solid var(--gold); }
+.notice.warn { background: var(--warn-bg); border-left-color: var(--warn); }
+.notice.warn strong { color: var(--warn); }
+.notice.green { background: var(--ok-bg); border-left-color: var(--forest); }
+.rules { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.rule { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; font-weight: 600; color: var(--forest); }
+@media (max-width: 600px) { .rules { grid-template-columns: 1fr; } }
+dl.how { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+dl.how div { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 16px 20px; border-top: 1px solid var(--line); }
+dl.how div:first-child { border-top: 0; }
+dl.how dt { font-family: var(--font-display); font-weight: 600; color: var(--forest); font-size: 18px; }
+dl.how dd { margin: 0; color: var(--ink); }
+@media (max-width: 600px) { dl.how div { grid-template-columns: 1fr; gap: 4px; } }
+ul.list { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
+.photo { border-radius: var(--radius); overflow: hidden; background: var(--card); border: 1px solid var(--line); margin: 0; }
+.photo img { display: block; width: 100%; height: 260px; object-fit: cover; }
+.photo figcaption { font-size: 13px; color: var(--muted); padding: 8px 14px; font-style: italic; }
+.qr-row { display: flex; flex-wrap: wrap; gap: 14px; }
+.qr-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; flex: 1 1 200px; }
+.qr-card b { font-family: var(--font-display); font-size: 18px; color: var(--forest); }
+.pending { width: 132px; height: 132px; border: 2px dashed var(--line); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--muted); padding: 10px; }
+.tbc { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; background: #fff3b0; color: #6b5400; padding: 2px 7px; border-radius: 4px; }
+.map-btn { text-decoration: none; }
+.map-btn { align-self: flex-start; margin-top: 4px; padding: 8px 14px; font-size: 15px; background: var(--ok-bg); color: var(--forest); }
+.modal { position: fixed; inset: 0; z-index: 20; background: rgba(20,32,26,.55); display: flex; align-items: center; justify-content: center; padding: 20px; }
+[hidden] { display: none !important; }
+.modal-box { background: var(--card); border-radius: var(--radius); padding: 28px; max-width: 360px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.modal-box .qr img { width: 220px; height: 220px; }
+.share-hero { position: relative; border-radius: var(--radius); overflow: hidden; background: var(--forest-deep); color: #fff; }
+.share-hero .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .5; }
+.share-hero-in { position: relative; padding: 40px 32px; display: grid; gap: 10px; max-width: 34em; }
+.share-hero h3 { color: #fff; font-size: clamp(28px, 4vw, 40px); }
+.share-main { background: var(--forest); color: #fff; border-radius: var(--radius); padding: 24px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
+.share-main h3 { color: #fff; font-size: 26px; }
+.share-main .pending { border-color: rgba(255,255,255,.4); color: #fff; }
+.share-copy { display: grid; gap: 8px; flex: 1 1 280px; min-width: 0; justify-items: start; }
+.share-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.share-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 14px; align-items: center; text-align: center; }
+.share-card h3 { font-size: 20px; margin-bottom: 4px; }
+.share-card p { font-size: 15px; }
+@media (max-width: 760px) { .share-grid { grid-template-columns: 1fr; } }
+.mono { font-family: ui-monospace, Menlo, monospace; background: var(--stone); padding: 1px 6px; border-radius: 4px; font-size: .92em; }
+@media (prefers-reduced-motion: reduce) { .tile:active { transform: none; } }
+</style>
+</head>
+<body>
+<main id="app"></main>
+<div id="map-modal" class="modal" hidden><div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="map-title">
+  <h3 id="map-title"></h3><div class="qr"><img id="map-qr" width="220" height="220" alt="QR code for directions"></div>
+  <p>Scan with your phone camera to open directions from the cottage in Google Maps.</p>
+  <button class="btn" id="map-close">Close</button></div></div>
+
+<script>
+/* ======================================================================
+   ALL GUEST INFORMATION LIVES IN THIS ONE BLOCK.
+   To update the guide, change the text here. Nothing below needs editing.
+   ====================================================================== */
+var GUIDE = {
+  cottage: "Forge Cottage",
+  brand: "Escape to the Stables",
+  area: "Denbighshire, North Wales",
+  wifi: { network: "GuestWifi", password: "Enjoyyourstay123!" },
+  hosts: [ { name: "Suzy", phone: "07493 679 798" }, { name: "Arwel", phone: "07799 777 964" } ],
+  email: "hello@escapetothestables.co.uk",
+  website: "https://escapetothestables.co.uk",
+  instagram: "https://www.instagram.com/escapetothestables/",
+  facebook: "https://www.facebook.com/profile.php?id=100063806363139",
+  signup: "",              /* paste the mailing-list sign-up link here */
+  location: { postcode: "LL16 4HY", gps: "53.199508, -3.351965", w3w: "///forecast.gratuity.farm" },
+  idleMinutes: 3           /* return to the home screen after this many minutes untouched */
+};
+
+var EAT = [
+  { n: "Dinorben Arms", d: "About 5 min", where: "Bodfari", t: "In the heart of Bodfari, with stunning views. Ideal for lunch, an evening meal, or a drink while out on a walk.", web: "brunningandprice.co.uk/dinorbenarms" },
+  { n: "The White Horse", d: "About 10 min", where: "Hendrerwydd", t: "A fabulous country restaurant, ideal for a cosy drink or a special occasion. Book ahead.", web: "whitehorserestaurant.co.uk", tel: "01745 584638" },
+  { n: "Con Amici Italian", d: "About 10 min", where: "Denbigh", t: "Fresh handmade pizza and pasta, with vegetarian options.", tel: "01745 812227" },
+  { n: "Brookhouse Mill", d: "About 10 min", where: "Ruthin Road", t: "Lovely pub grub in a 17th-century mill with the original cogs still on show.", web: "Facebook page", tel: "01745 813377" },
+  { n: "The Royal Oak", d: "About 12 min", where: "Caerwys", t: "A friendly pub with a lovely beer garden, often showing the football and rugby.", web: "theroyaloakcaerwys.co.uk" },
+  { n: "Piccadilly Inn", d: "About 12 min", where: "Caerwys", t: "A stunning country restaurant with delicious meals.", web: "piccadillyinn.co.uk" },
+  { n: "Indian Lounge", d: "About 15 min", where: "Nannerch", t: "Fantastic Indian cuisine, with takeaway and dine-in options.", web: "indianloungenannerch.co.uk" },
+  { n: "The Crown", d: "About 15 min", where: "Lixwm", t: "A welcoming village pub serving delicious food." },
+  { n: "The Griffin Inn", d: "About 20 min", where: "Llanbedr Dyffryn Clwyd", pc: "LL15 1UP", t: "Grade II listed stone inn at the foot of the Clwydian Range. Oak beams, log fires, cask ales and a big beer garden. Offa's Dyke Path is just up the hill.", web: "griffin.wales", tel: "01824 705542" },
+  { n: "Nant y Felin", d: "About 8 min", where: "Pentre Llanrhaeadr", t: "Organic, locally sourced food, handmade sourdough and their own ice cream. Wednesday to Saturday evenings and Sunday lunch.", web: "nantyfelin.co.uk" }
+];
+var TAKEAWAY = [
+  { n: "Coriander Indian", del: true, where: "4 Bridge St, Denbigh", t: "Locals rave about it: tandoori, balti, vegetarian dishes, kebabs and a kids menu, with generous portions.", tel: "01745 818777", web: "mycoriander.co.uk" },
+  { n: "Simply Fish & Chips", del: true, where: "Denbigh", t: "Highly rated local chippy with no minimum order. Also does pizza.", web: "Order via Just Eat" },
+  { n: "Domino's Denbigh", del: true, where: "Denbigh Shopping Park", t: "Reliable pizza delivery. Order online or in the app and check for deals. Minimum order applies.", web: "dominos.co.uk" },
+  { n: "Chen Lin Chinese", del: true, where: "Back Row, Denbigh", t: "Popular Chinese restaurant and takeaway, well reviewed for portion size and value.", tel: "01745 816100" },
+  { n: "Tai Wing Express", del: true, where: "2 Rhyl Rd, Denbigh", t: "Highly rated Chinese takeaway with quick service.", tel: "01745 812158" },
+  { n: "Subway Denbigh", del: true, where: "Denbigh", t: "A lighter option, delivered to the door.", web: "Order via Just Eat" },
+  { n: "Sun City Chinese", del: false, where: "Denbigh", t: "A local favourite for years, known for generous portions. Cash preferred, so call ahead to check." },
+  { n: "Finns Fish & Chip Shop", del: false, where: "Denbigh", t: "Classic British chippy. Collect and bring it back to enjoy at the cottage." }
+];
+var TREATS = [
+  { n: "Chilly Cow Ice Cream", d: "About 15 min", where: "Llanychan, near Ruthin", pc: "LL15 1UF", t: "Farm ice cream with an honesty box. Made on the family farm from the milk of their Brown Swiss cows: honeycomb, chocolate fudge, sorbets, vegan options and even ice cream for dogs. Find the freezer by the farm gate.", web: "chillycow.co.uk" },
+  { n: "Llwyn Banc Dairy", d: "About 10 min", where: "Llanrhaeadr", t: "Open 24/7. A self-serve pod for soft scoop ice cream and fresh milkshakes made from their own milk, with weekly special flavours. Also hot drinks and local snacks. Contactless payment.", web: "llwynbancdairy.com" },
+  { n: "Rhug Estate Farm Shop", d: "About 30 min", where: "Corwen", pc: "LL21 0EH", t: "Organic farm shop, café and drive-thru serving their own beef, lamb and produce. Perfect for stocking the cottage kitchen.", web: "rhug.co.uk" },
+  { n: "Llandyrnog Community Shop", d: "About 5 min", where: "Llandyrnog", pc: "LL16 4HG", t: "Our friendly village shop and post office. Pop in for tea, coffee and breakfast, plus everyday groceries and essentials." },
+  { n: "Vale Vineyard", ll: "53.210366,-3.380964", d: "About 5 min", where: "Dre Goch Isaf, Llandyrnog", t: "Gwinllan y Dyffryn, our local vineyard just down the road. Vineyard tours and wine tastings, mainly in the summer months, by appointment, so call or book ahead. You can also buy their wines at the cellar door.", tel: "07815 140945", web: "valevineyard.co.uk" }
+
+];
+var TODO = [
+  { group: "From the doorstep", items: [
+    { n: "Clwydian Range walks", d: "Right on your doorstep", t: "An Area of Outstanding Natural Beauty, with ridge walks and views over the Vale of Clwyd. Offa's Dyke Path is close by." },
+    { n: "Denbigh Castle & town", d: "About 5 min", t: "A medieval castle, historic walls, independent shops and cafés." } ] },
+  { group: "Adventure", items: [
+    { n: "Zip World Velocity", d: "About 45 min, Bethesda", t: "The fastest zip line in the world, over a vast slate quarry. Book well in advance.", web: "zipworld.co.uk" },
+    { n: "Zip World Bounce Below", d: "About 40 min, Blaenau Ffestiniog", t: "Underground trampolines in a huge Victorian slate cavern. Titan, a four-person zip line, is at the same site.", web: "zipworld.co.uk" },
+    { n: "Adventure Parc Snowdonia", d: "About 40 min, Dolgarrog", t: "An inland surf lagoon with lessons for all abilities, plus other water activities.", web: "adventuresnowdonia.com" } ] },
+  { group: "Zoos & wildlife", items: [
+    { n: "Welsh Mountain Zoo", d: "About 25 min, Colwyn Bay", t: "The National Zoo of Wales, high above Colwyn Bay with sea views.", web: "welshmountainzoo.org" },
+    { n: "Anglesey Sea Zoo", d: "About 50 min, Anglesey", t: "Marine life from Welsh waters. A good rainy-day option with a lovely drive over the Menai Strait.", web: "angleseyseazoo.co.uk" },
+    { n: "Bodnant Garden", d: "About 30 min, Conwy Valley", t: "One of the finest gardens in Wales (National Trust), with views towards Snowdonia and a good tearoom.", web: "nationaltrust.org.uk" } ] },
+  { group: "Coast & culture", items: [
+    { n: "Llandudno", d: "About 30 min", t: "Victorian seaside resort with a long promenade, a pier, and the Great Orme tramway and cable car." },
+    { n: "Conwy Castle & Town Walls", d: "About 30 min", t: "A superb medieval castle with town walls you can walk. The quayside is lovely for fish and chips." },
+    { n: "Llangollen & Pontcysyllte Aqueduct", d: "About 35 min", t: "A UNESCO World Heritage aqueduct high above the River Dee, with canal boat trips and a charming town." },
+    { n: "Yr Wyddfa (Snowdon)", d: "About 60 min", t: "Walk to the summit of Wales' highest mountain, or take the Snowdon Mountain Railway from Llanberis.", web: "snowdonrailway.co.uk" } ] }
+];
+
+/* ====================================================================== */
+var ICONS = {
+  wifi: '<path d="M2 9a15 15 0 0 1 20 0"/><path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1"/>',
+  rules: '<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 12h7M9 16h7"/>',
+  house: '<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
+  hottub: '<path d="M3 13h18v3a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/><path d="M8 9c0-1.5 1-1.5 1-3M12 9c0-1.5 1-1.5 1-3M16 9c0-1.5 1-1.5 1-3"/>',
+  eat: '<path d="M7 3v8a2 2 0 0 0 2 2v8"/><path d="M5 3v6M9 3v6"/><path d="M17 3c-2 2-2 6 0 8v10"/>',
+  takeaway: '<path d="M5 8h14l-1.5 12h-11z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+  treats: '<path d="M8 10a4 4 0 0 1 8 0"/><path d="M7 10h10l-5 11z"/>',
+  todo: '<path d="m3 20 6-11 4 7 3-4 5 8z"/><circle cx="17" cy="6" r="2"/>',
+  checkout: '<path d="M14 4h5v16h-5"/><path d="M4 12h11M11 8l4 4-4 4"/>',
+  contact: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+  emergency: '<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/>',
+  stay: '<path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/>'
+};
+var SECTIONS = [
+  { id: "wifi", title: "Wi-Fi", blurb: "Network and password" },
+  { id: "rules", title: "House rules", blurb: "Please read on arrival" },
+  { id: "house", title: "How things work", blurb: "Heating, TV, stove and more" },
+  { id: "hottub", title: "Hot tub & BBQ", blurb: "Using the hot tub safely" },
+  { id: "eat", title: "Eating out", blurb: "Our favourite pubs and restaurants" },
+  { id: "takeaway", title: "Takeaways", blurb: "Delivery and collection" },
+  { id: "treats", title: "Local treats", blurb: "Farm ice cream and produce" },
+  { id: "todo", title: "Things to do", blurb: "Walks, castles, coast" },
+  { id: "checkout", title: "Check-out", blurb: "10am, and before you leave" },
+  { id: "contact", title: "Contact us", blurb: "Suzy and Arwel" },
+  { id: "emergency", title: "Emergencies", blurb: "999, hospital, taxis" },
+  { id: "stay", title: "Share your stay", blurb: "Check in, tag us and get offers", feature: true }
+];
+
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+/* On a phone, Directions opens Google Maps; on the iPad it shows a QR code to scan */
+function mapUrl(p) {
+  var dest = p.ll || [p.n, p.where === "Denbigh town centre" ? "" : p.where, p.pc, "Wales"].filter(Boolean).join(", ");
+  return "https://www.google.com/maps/dir/?api=1&origin=" + GUIDE.location.gps.replace(/\s/g, "") + "&destination=" + encodeURIComponent(dest);
+}
+function isPhone() { return window.innerWidth < 700; }
+function slug(n) { return n.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
+var MAP_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>';
+function icon(id) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICONS[id] + "</svg>"; }
+/* QR codes are image files in img/ (qr-wifi, qr-facebook, qr-instagram, qr-website, qr-signup) */
+function qr(name, size) { return '<div class="qr"><img src="img/qr-' + name + '.png" width="' + size + '" height="' + size + '" alt="QR code"></div>'; }
+function hostsLine() { return GUIDE.hosts.map(function (h) { return h.name + ": <b>" + esc(h.phone) + "</b>"; }).join(" &nbsp;·&nbsp; "); }
+
+function place(p, chip) {
+  var meta = [];
+  if (p.pc) meta.push("Postcode: <b>" + esc(p.pc) + "</b>");
+  else if (p.where) meta.push("Area: <b>" + esc(p.where) + "</b>");
+  if (p.tel) meta.push("Tel: <b>" + esc(p.tel) + "</b>");
+  if (p.web) meta.push("Web: <b>" + esc(p.web) + "</b>");
+  return '<article class="card"><div class="head-row"><h3>' + esc(p.n) + "</h3>" + (chip || "") + "</div><p>" + esc(p.t) + "</p>" + (meta.length ? '<div class="meta">' + meta.join("") + "</div>" : "") +
+    '<a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(mapUrl(p)) + '" data-map="' + slug(p.n) + '" data-name="' + esc(p.n) + '">' + MAP_ICON + " Directions</a></article>";
+}
+
+var VIEWS = {
+  wifi: function () {
+    return '<div class="card" style="flex-direction:row;flex-wrap:wrap;gap:24px;align-items:center">' + qr('wifi', 180) +
+      '<div style="display:grid;gap:10px;min-width:0"><div class="eyebrow">Free Wi-Fi</div><div>Network<br><span style="font-family:var(--font-display);font-size:28px;color:var(--forest);font-weight:600">' + esc(GUIDE.wifi.network) + '</span></div><div>Password<br><span class="mono" style="font-size:24px">' + esc(GUIDE.wifi.password) + '</span></div><p class="small">Point your phone camera at the code to join without typing.</p></div></div>';
+  },
+  rules: function () {
+    var r = ["No smoking", "No parties (maximum 4 guests)", "No pets", "No outdoor music after 8.30pm", "Respect our neighbours", "Please report any damage"];
+    return '<div class="rules">' + r.map(function (x) { return '<div class="rule">' + x + "</div>"; }).join("") + "</div>" +
+      '<div class="notice"><strong>Hot tub noise after 10pm.</strong> Our neighbours are close by and sound carries, so please keep the noise down in the hot tub after 10pm. This has been a problem in the past and we\'d really appreciate your help.</div>' +
+      '<div class="notice"><strong>Towels.</strong> The towels provided on arrival are the only ones to be used. If you need more, please ask and we\'ll be happy to help.</div>' +
+      '<p class="intro">Please keep noise to a minimum at all times. If any problems come up during your stay, get in touch and we\'ll do our best to sort them out.</p>';
+  },
+  house: function () {
+    var rows = [
+      ["Heating", "The heating is in zones, with separate controls for the downstairs bedroom, the living and kitchen area, and the bathroom. Adjust the temperature with the up and down arrows and press A to confirm."],
+      ["Cooker", "Induction hob: it only heats when a suitable pot or pan is on it. There is a single oven with a grill."],
+      ["Microwave", "Choose the power level (90, 180, 360, 600 or 800), turn the dial to set the time, then press start."],
+      ["TV", "Smart TV with Freeview. Use the Guide button to choose what to watch. YouTube and Netflix apps are available, but <b>you'll need to log in to your own Netflix account</b>. There is also a Blu-ray player (no discs provided, so bring your own)."],
+      ["Dishwasher", "Tablets are provided. Let us know if you need more."],
+      ["Washer-dryer", "One machine does both. Non-bio detergent and fabric softener are provided. For a quick wash use the X setting; see the manual for other settings."],
+      ["Wood stove", "<b>Do not use if you have young children in the house.</b> It is your responsibility to make sure nobody touches the stove when lit. Always use the glove provided when opening the door. Use plenty of kindling to get it hot, then add logs. Firelighters, kindling, logs and a lighter are provided; extra kindling and logs are £6 each."],
+      ["Other", "Kettle, toaster, sandwich maker, iron and ironing board, hair dryer, folding BBQ stand and disposable BBQs. Just ask if you need anything else."]
+    ];
+    return '<dl class="how">' + rows.map(function (r) { return "<div><dt>" + r[0] + "</dt><dd>" + r[1] + "</dd></div>"; }).join("") + "</dl>" +
+      '<div class="notice green"><strong>Struggling with an appliance?</strong> Please don\'t hesitate to contact us. ' + hostsLine() + "</div>";
+  },
+  hottub: function () {
+    return '<div class="grid2"><figure class="photo"><img src="img/hottub-panel.jpg" alt="Hot tub control panel" style="object-fit:contain;background:#fff"><figcaption>The bubble and light buttons on the control panel</figcaption></figure>' +
+      '<div class="card"><h3>Hot tub & outdoor shower</h3><ul class="list">' +
+      "<li><b>Everyone must shower before using the hot tub.</b> Fake tan must be washed off first, as it clogs the filter. The outdoor shower is set at a safe warm temperature and can't be adjusted.</li>" +
+      "<li>The hot tub is set to 40°C and the temperature drops during use. Children shouldn't stay in too long, as they are less able to regulate their body temperature.</li>" +
+      "<li>It's fully cleaned and refilled after every guest, so it may not be up to temperature on your first evening. It's treated with chlorine and we may need to check the water during your stay.</li>" +
+      "<li><b>To use:</b> press the bubble button once for low, twice for high. You can also turn the black dial for more bubbles. After use, press the bubble button until you see <b>AUTO</b>, and leave it on that setting with the lid closed to keep it warm.</li></ul></div></div>" +
+      '<div class="notice"><strong>Quiet after 10pm, please.</strong> Sound carries to our neighbours.</div>' +
+      '<div class="card"><h3>BBQ</h3><ul class="list"><li>A BBQ stand and 2 disposable BBQs are supplied when you order a BBQ kit. Extra disposable BBQs are £5 each.</li><li>Only use disposable BBQs, and leave the stand and tools clean. <b>Charcoal must not be used in the stand.</b></li><li>There is a fire extinguisher outside in case of emergency.</li></ul></div>';
+  },
+  eat: function () {
+    return '<p class="intro">A small selection of our favourites. See TripAdvisor for more recommendations.</p><div class="grid2">' +
+      EAT.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>" + taxi();
+  },
+  takeaway: function () {
+    var del = TAKEAWAY.filter(function (p) { return p.del; }), col = TAKEAWAY.filter(function (p) { return !p.del; });
+    return '<div class="notice warn"><strong>Read this before ordering delivery.</strong> Our postcode ' + GUIDE.location.postcode + " does <b>not</b> bring drivers to our door. Always <b>call the restaurant</b> and give them our GPS coordinates <span class=\"mono\">" + GUIDE.location.gps + '</span> or what3words <span class="mono">' + GUIDE.location.w3w + "</span>. Some apps may show us as outside the delivery area, and a quick phone call usually sorts it. If a driver is struggling to find us, they can ring Suzy or Arwel.</div>" +
+      '<div class="sub">Delivering to the area</div><div class="grid2">' + del.map(function (p) { return place(p, '<span class="chip green">Delivers</span>'); }).join("") + "</div>" +
+      '<div class="sub">Collection only</div><div class="grid2">' + col.map(function (p) { return place(p, '<span class="chip">Collection</span>'); }).join("") + "</div>";
+  },
+  treats: function () {
+    return '<p class="intro">Some of the most unique food experiences in North Wales are right on your doorstep.</p><div class="grid2">' +
+      TREATS.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>";
+  },
+  todo: function () {
+    return '<p class="intro">Adventure, wildlife, coast and culture, all within easy reach. Journey times are approximate by car. Please check opening times and book ahead for the busier attractions.</p>' +
+      TODO.map(function (g) { return '<div class="sub">' + esc(g.group) + '</div><div class="grid2">' + g.items.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>"; }).join("");
+  },
+  checkout: function () {
+    var steps = [
+      ["Log out of all devices.", "Make sure you've logged out of Netflix, YouTube and any other accounts on the TV and Blu-ray player."],
+      ["Empty the bins", "and put the rubbish and recycling in the bins outside."],
+      ["Strip the beds", "and put all the bedding in the bath, with the towels you've used."],
+      ["Dishes:", "either wash, dry and put them away, or fill the dishwasher and switch it on before you leave."],
+      ["Leave the cottage clean and tidy,", "as you found it."],
+      ["Fill in our suggestions book", "with anything we could do to improve Forge Cottage for future guests."],
+      ["Lock the cottage", "and put the key back in the key box."]
+    ];
+    return '<div class="notice"><strong>Check-out is at 10am.</strong> We may ask to enter the back courtyard from 9am to start emptying the hot tub.</div>' +
+      '<div class="card"><h3>Before you leave</h3><ol class="list">' + steps.map(function (s) { return "<li><b>" + s[0] + "</b> " + s[1] + "</li>"; }).join("") + "</ol></div>" +
+      "<p class=\"intro\">We hope you've had a wonderful break and will consider staying with us again. If you enjoyed your stay, we'd love a review and a tag on social media.</p>";
+  },
+  contact: function () {
+    return '<div class="grid2"><figure class="photo"><img src="img/hosts.jpg" alt="Arwel and Suzy during the renovation of the barn"><figcaption>Arwel &amp; Suzy during the renovation of the barn</figcaption></figure>' +
+      '<div class="card"><h3>Need to speak to us?</h3><p>We have been renovating Forge Cottage since February 2018. It has been converted with love and care, and we\'d appreciate it if you would respect our home as you would your own.</p>' +
+      GUIDE.hosts.map(function (h) { return '<p style="font-size:20px">' + h.name + ': <b style="color:var(--forest)">' + esc(h.phone) + "</b></p>"; }).join("") +
+      "<p>Email: <b>" + esc(GUIDE.email) + "</b></p></div></div>" +
+      '<div class="notice green"><strong>Finding us:</strong> postcode ' + GUIDE.location.postcode + ' doesn\'t lead to the door. Use GPS <span class="mono">' + GUIDE.location.gps + '</span> or what3words <span class="mono">' + GUIDE.location.w3w + "</span>.</div>";
+  },
+  emergency: function () {
+    return '<div class="notice warn"><strong>In an emergency, call 999.</strong> Tell them our GPS location <span class="mono">' + GUIDE.location.gps + '</span> or what3words <span class="mono">' + GUIDE.location.w3w + "</span>, because the postcode doesn't lead to the door.</div>" +
+      '<div class="grid2">' +
+      '<article class="card"><h3>Nearest A&amp;E</h3><p>Ysbyty Glan Clwyd, Bodelwyddan, LL18 5UJ. About 20 minutes by car.</p></article>' +
+      '<article class="card"><h3>Minor injuries: Denbigh Infirmary</h3><p>Minor Injury Unit for cuts, sprains, minor burns and possible broken bones. Ruthin Road, Denbigh, LL16 3ES, about 10 minutes away.</p><div class="meta">Open: <b>8am to 6pm, Monday to Friday</b> Tel: <b>03000 855776</b></div><p class="small">Closed at weekends and on bank holidays. Please call before you go.</p></article>' +
+      '<article class="card"><h3>Non-urgent medical help</h3><p>Call <b>111</b> (NHS 111 Wales), free from any phone, 24 hours a day.</p></article>' +
+      '<article class="card"><h3>Nearest pharmacy</h3><p>In Denbigh town centre, about 5 minutes away. <span class="tbc">To confirm</span></p></article>' +
+      '<article class="card"><h3>Fuse box &amp; water stopcock</h3><p>Location to be added. <span class="tbc">To confirm</span></p></article>' +
+      '<article class="card"><h3>Fire extinguisher</h3><p>Outside, by the BBQ area.</p></article>' +
+      '<article class="card"><h3>Call your hosts</h3><p>' + hostsLine() + "</p></article></div>" + taxi();
+  },
+  stay: function () {
+    var signup = GUIDE.signup ? qr('signup', 150) : '<div class="pending" style="width:150px;height:150px">Sign-up link coming soon</div>';
+    return '<section class="share-hero"><img class="hero-bg" src="img/night.jpg" alt=""><div class="share-hero-in"><div class="eyebrow" style="color:var(--gold-soft)">Enjoying Forge Cottage?</div><h3>Share your stay with us</h3><p>We\'re a small family business and every check-in, tag and review really helps. Grab your phone and scan a code below.</p></div></section>' +
+      '<article class="share-main">' + signup + '<div class="share-copy"><span class="chip">Guests hear first</span><h3>Join our mailing list</h3><p>Be the first to hear about last-minute dates, special offers and what\'s new at Escape to the Stables, before they go anywhere else. No spam, and you can unsubscribe any time.</p></div></article>' +
+      '<div class="share-grid">' +
+      '<article class="share-card">' + qr('facebook', 132) + '<div><h3>Check in on Facebook</h3><p>Scan, tap <b>Check in</b> and let your friends know where you\'re staying. Then give our page a like.</p></div></article>' +
+      '<article class="share-card">' + qr('instagram', 132) + '<div><h3>Tag us on Instagram</h3><p>Post your hot tub evenings and hillside views and tag <b>@escapetothestables</b>. We love seeing your photos and might share our favourites.</p></div></article>' +
+      '<article class="share-card">' + qr('website', 132) + '<div><h3>Come back soon</h3><p>Book your next stay direct on our website at <b>escapetothestables.co.uk</b>.</p></div></article>' +
+      '</div>' +
+      '<div class="notice"><strong>Photo ideas:</strong> the hot tub under the stars, Forge Cottage lit up at night, sunset over the Clwydian Range, a cosy evening by the wood stove, or a cone from Chilly Cow.</div>' +
+      "<p class=\"intro\">Had a lovely time? A review means the world to us, and helps other guests find us.</p>";
+  }
+};
+function taxi() { return '<div class="notice green"><strong>Need a taxi?</strong> City Cabs: <b>01745 582 277</b>. Please give clear directions, as our postcode doesn\'t take you right to the property. Use <span class="mono">' + GUIDE.location.gps + '</span> or what3words <span class="mono">' + GUIDE.location.w3w + "</span>.</div>"; }
+
+function home() {
+  return '<header class="hero"><img class="hero-bg" src="img/hills.jpg" alt=""><div class="wrap"><div><div class="place">' + GUIDE.cottage + " · " + GUIDE.area + '</div><h1>Welcome to<br><em>' + GUIDE.brand + '</em></h1><p class="lede">We\'re so glad you\'re here. Tap a tile below for anything you need during your stay.</p></div>' +
+    '<div class="wifi-card">' + qr('wifi', 96) + '<div><div class="eyebrow">Free Wi-Fi</div><div class="net">' + esc(GUIDE.wifi.network) + '</div><div style="margin-top:4px"><span class="pw">' + esc(GUIDE.wifi.password) + "</span></div></div></div></div></header>" +
+    '<div class="wrap"><nav class="tiles" aria-label="Guest guide sections">' +
+    SECTIONS.map(function (s) { return '<button class="tile' + (s.feature ? " feature" : "") + '" data-go="' + s.id + '">' + icon(s.id) + "<b>" + s.title + "</b><span>" + s.blurb + "</span></button>"; }).join("") +
+    '</nav><div class="foot"><span>Need us? ' + hostsLine() + "</span><span>" + esc(GUIDE.email) + "</span></div></div>";
+}
+function section(id) {
+  var s = SECTIONS.filter(function (x) { return x.id === id; })[0];
+  return '<div class="bar"><div class="wrap"><button class="btn" data-go="">← Home</button><h2>' + s.title + '</h2></div></div><div class="wrap"><div class="view">' + VIEWS[id]() + "</div></div>";
+}
+function render() {
+  document.getElementById("map-modal").hidden = true;
+  var id = (location.hash || "").replace("#", "");
+  document.getElementById("app").innerHTML = VIEWS[id] ? section(id) : home();
+  window.scrollTo(0, 0);
+}
+document.addEventListener("click", function (e) {
+  var m = e.target.closest ? e.target.closest("[data-map]") : null;
+  if (m && isPhone()) return;
+  if (m) { e.preventDefault(); document.getElementById("map-title").textContent = m.getAttribute("data-name"); document.getElementById("map-qr").src = "img/map/" + m.getAttribute("data-map") + ".png"; document.getElementById("map-modal").hidden = false; return; }
+  if (e.target.id === "map-close" || e.target.id === "map-modal") { document.getElementById("map-modal").hidden = true; return; }
+  var t = e.target.closest ? e.target.closest("[data-go]") : null;
+  if (!t) return;
+  var id = t.getAttribute("data-go");
+  location.hash = id ? id : "";
+  if (!id) render();
+});
+window.addEventListener("hashchange", render);
+
+/* Return to the home screen when nobody has touched the iPad for a while */
+var idle;
+function resetIdle() { clearTimeout(idle); idle = setTimeout(function () { if (location.hash) { location.hash = ""; render(); } }, GUIDE.idleMinutes * 60000); }
+["touchstart", "click", "scroll", "keydown"].forEach(function (ev) { document.addEventListener(ev, resetIdle, { passive: true }); });
+resetIdle();
+render();
+</script>
+
+</body>
+</html>
