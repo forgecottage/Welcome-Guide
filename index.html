@@ -206,16 +206,20 @@ var TREATS = [
 
 ];
 var WALKS = [
-  { n: "Woodland & Valley Walk to Coed Llangwyfan", slug: "walk-coed-llangwyfan", ll: "53.188033,-3.302373", dist: "3.6 miles each way", time: "About 1½ hours one way", type: "Lanes and woodland trails",
-    t: "Head east along the quiet lanes from the cottage to Coed Llangwyfan, a forest in the Clwydian Range with woodland paths and views back across the valley. Once you arrive, explore the waymarked woodland trail for a longer outing.",
-    tip: "Walk back the same way, or arrange a pick-up at the forest car park." },
-  { n: "Countryside & Heritage Walk to Denbigh Castle", slug: "walk-denbigh-castle", ll: "53.180976,-3.420624", dist: "5.3 miles one way", time: "About 2 hours one way", type: "Country lanes and roadside",
-    t: "A longer walk west across the Vale of Clwyd to Denbigh Castle on Castle Hill. Finish with the castle ramparts, the old town walls and a well-earned coffee in one of Denbigh's cafés.",
-    tip: "Parts of this route follow busy roads, so take care and wear something bright. Castle opening times change with the seasons, so check with Cadw before you go. Get a taxi back with City Cabs." },
-  { n: "Ridge & Hillfort: Moel Arthur and Offa's Dyke Path", slug: "walk-moel-arthur", dest: "Moel Arthur Hill Fort, Clwydian Range, Wales", dist: "Choose your own distance", time: "A short climb or a full day", type: "Hill paths and open ridge",
-    t: "For big hill scenery, join Offa's Dyke Path on the Clwydian ridge and climb to Moel Arthur, an Iron Age hill fort with wide views over the Vale of Clwyd and beyond. Follow the national trail along the ridge for as far as you like.",
-    tip: "The ridge is exposed, so check the weather and turn back if cloud comes down." }
+  { n: "Coed Llangwyfan Forest Walk", slug: "walk-coed-llangwyfan", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "1.9 miles (3 km)", time: "About 1½ hours", type: "Moderate, forest tracks",
+    t: "A waymarked loop through the conifer forest on the side of the Clwydian Range, with glimpses back across the Vale of Clwyd. A good choice for a shorter walk or a wet day.",
+    park: "Coed Llangwyfan car park (free), postcode CH7 5RP. About 10 minutes' drive from the cottage. No toilets." },
+  { n: "Penycloddiau Hillfort and Offa's Dyke", slug: "walk-penycloddiau", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "2.5 miles (4 km)", time: "About 1½ to 2 hours", type: "Moderate, hill paths",
+    t: "Follow Offa's Dyke Path up from the forest to Penycloddiau, one of the largest Iron Age hillforts in Wales, then loop back down. Big views over the Vale of Clwyd on a clear day.",
+    park: "Coed Llangwyfan car park (free), postcode CH7 5RP. The path isn't fully waymarked, so take a map or phone." },
+  { n: "Moel Arthur Circular", slug: "walk-moel-arthur", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "4 miles (6.6 km)", time: "About 2½ hours", type: "Moderate, hill paths",
+    t: "Head south along the ridge on Offa's Dyke Path to Moel Arthur, a steep little hill crowned by an Iron Age fort, and return through the forest. One of the best views in the Clwydian Range.",
+    park: "Coed Llangwyfan car park (free), postcode CH7 5RP. The route isn't fully waymarked, so take a map or phone." },
+  { n: "Moel Famau and the Jubilee Tower", slug: "walk-moel-famau", dest: "Moel Famau car park, Bwlch Penbarras, CH7 5SH", dist: "3.6 miles (5.8 km)", time: "About 2½ hours", type: "Moderate, 280 m climb",
+    t: "The classic Clwydian walk. A waymarked loop climbs steeply but steadily to the Jubilee Tower on the summit of Moel Famau, the highest point in the range, with views to Snowdonia, the coast and on a clear day Liverpool.",
+    park: "Moel Famau car park, Bwlch Penbarras, postcode CH7 5SH (it covers a wide area). About 20 minutes' drive. Pay by card or contactless: £2.50 for 3 hours, £6 all day. Toilets on site." }
 ];
+
 
 var TODO = [
   { group: "From the doorstep", items: [
@@ -259,7 +263,7 @@ var SECTIONS = [
   { id: "eat", title: "Eating out", blurb: "Our favourite pubs and restaurants" },
   { id: "takeaway", title: "Takeaways", blurb: "Delivery and collection" },
   { id: "treats", title: "Local treats", blurb: "Farm ice cream and produce" },
-  { id: "walks", title: "Walks", blurb: "Three walks from the door" },
+  { id: "walks", title: "Walks", blurb: "Four circular hill walks" },
   { id: "todo", title: "Things to do", blurb: "Castles, coast, adventure" },
   { id: "checkout", title: "Check-out", blurb: "10am, and before you leave" },
   { id: "contact", title: "Contact us", blurb: "Suzy and Arwel" },
@@ -274,7 +278,7 @@ function mapUrl(p) {
   return "https://www.google.com/maps/dir/?api=1&origin=" + GUIDE.location.gps.replace(/\s/g, "") + "&destination=" + encodeURIComponent(dest);
 }
 function walkUrl(w) {
-  return "https://www.google.com/maps/dir/?api=1&travelmode=walking&origin=" + GUIDE.location.gps.replace(/\s/g, "") + "&destination=" + encodeURIComponent(w.ll || w.dest);
+  return "https://www.google.com/maps/dir/?api=1&origin=" + GUIDE.location.gps.replace(/\s/g, "") + "&destination=" + encodeURIComponent(w.dest);
 }
 function isPhone() { return window.innerWidth < 700; }
 var PHONE_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>';
@@ -348,14 +352,14 @@ var VIEWS = {
       TREATS.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>";
   },
   walks: function () {
-    return '<p class="intro">Three walks you can start from the cottage door, from a woodland ramble to a hill fort on the ridge.</p>' +
+    return '<p class="intro">Four circular walks in the Clwydian Range, all a short drive from the cottage, from a forest loop to the summit of Moel Famau.</p>' +
       WALKS.map(function (w, i) {
-        return '<article class="card walk"><div class="eyebrow">Walk ' + (i + 1) + '</div><h3>' + esc(w.n) + '</h3>' +
-          '<dl class="walk-stats"><div><dt>Distance</dt><dd>' + esc(w.dist) + '</dd></div><div><dt>Time</dt><dd>' + esc(w.time) + '</dd></div><div><dt>Terrain</dt><dd>' + esc(w.type) + '</dd></div></dl>' +
-          '<p>' + esc(w.t) + '</p><p class="small"><b>Good to know:</b> ' + esc(w.tip) + '</p>' +
-          '<div class="actions"><a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(walkUrl(w)) + '" data-map="' + w.slug + '" data-name="' + esc(w.n) + '">' + MAP_ICON + ' Walking directions</a></div></article>';
+        return '<article class="card walk"><div class="eyebrow">Walk ' + (i + 1) + ' · Circular</div><h3>' + esc(w.n) + '</h3>' +
+          '<dl class="walk-stats"><div><dt>Distance</dt><dd>' + esc(w.dist) + '</dd></div><div><dt>Time</dt><dd>' + esc(w.time) + '</dd></div><div><dt>Grade</dt><dd>' + esc(w.type) + '</dd></div></dl>' +
+          '<p>' + esc(w.t) + '</p><p class="small"><b>Where to park:</b> ' + esc(w.park) + '</p>' +
+          '<div class="actions"><a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(walkUrl(w)) + '" data-map="' + w.slug + '" data-name="' + esc(w.n) + '">' + MAP_ICON + ' Directions to the car park</a></div></article>';
       }).join("") +
-      '<div class="notice"><strong>Before you set off:</strong> wear sturdy footwear, as lanes and paths can be muddy. Take a torch for late-afternoon returns in autumn and winter, and decide whether you\'re walking back or need a lift. Taxi: City Cabs ' + telLink("01745 582 277") + '.</div>';
+      '<div class="notice"><strong>Before you set off:</strong> wear sturdy footwear, as paths can be muddy, and check the weather, as the ridge is exposed. Take a torch for late-afternoon returns in autumn and winter.</div>';
   },
   todo: function () {
     return '<p class="intro">Adventure, wildlife, coast and culture, all within easy reach. Journey times are approximate by car. Please check opening times and book ahead for the busier attractions.</p>' +
