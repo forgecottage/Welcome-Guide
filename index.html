@@ -73,11 +73,20 @@ a { color: var(--forest); }
 .tile svg { width: 30px; height: 30px; stroke: var(--forest); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .tile b { font-family: var(--font-display); font-size: 19px; color: var(--forest); font-weight: 600; }
 .tile span { font-size: 14px; color: var(--muted); line-height: 1.35; }
-.tile.wide { grid-column: span 2; }
+.tile.wide { grid-column: span 3; }
+@media (max-width: 600px) { .tile.wide { grid-column: auto; } }
 .sub-head { font-family: var(--font-title); font-weight: 700; font-size: 40px; color: var(--forest); margin: 18px 0 0; }
 .tile.feature { background: var(--forest); border-color: var(--forest); grid-column: 1 / -1; min-height: 0; }
 .tile.feature b, .tile.feature span { color: #fff; }
 .tile.feature svg { stroke: var(--gold-soft); }
+.tile.feature { position: relative; }
+.tile .social { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); display: flex; gap: 14px; }
+.tile .social svg { width: 48px; height: 48px; }
+@media (max-width: 600px) { .tile .social { position: static; transform: none; margin-top: 6px; } .tile .social svg { width: 36px; height: 36px; } }
+.brand-h { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.brand-h svg { width: 30px; height: 30px; flex: none; }
+.share-hero .social { display: flex; gap: 12px; margin-top: 4px; }
+.share-hero .social svg { width: 40px; height: 40px; }
 @media (max-width: 860px) { .tiles { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 600px) { .tiles { grid-template-columns: repeat(2, 1fr); } .wifi-card { width: 100%; } }
 
@@ -271,8 +280,8 @@ var ICONS = {
 };
 var SECTIONS = [
   { id: "wifi", title: "Wi-Fi", blurb: "Network and password", hidden: true },
-  { id: "rules", title: "House rules", blurb: "Please read on arrival", wide: true },
-  { id: "house", title: "How things work", blurb: "Heating, TV, stove, hot tub and BBQ", wide: true },
+  { id: "rules", title: "House rules", blurb: "Please read on arrival" },
+  { id: "house", title: "How things work", blurb: "Heating, TV, stove, hot tub and BBQ" },
   { id: "hottub", title: "Hot tub & BBQ", blurb: "Using the hot tub safely", hidden: true },
   { id: "eat", title: "Eating out", blurb: "Our favourite pubs and restaurants" },
   { id: "takeaway", title: "Takeaways", blurb: "Delivery and collection" },
@@ -281,7 +290,7 @@ var SECTIONS = [
   { id: "todo", title: "Things to do", blurb: "Castles, coast, adventure" },
   { id: "checkout", title: "Check-out", blurb: "10am, and before you leave" },
   { id: "contact", title: "Contact us", blurb: "Suzy and Arwel" },
-  { id: "emergency", title: "Emergencies", blurb: "999, hospital, taxis" },
+  { id: "emergency", title: "Emergencies", blurb: "999, hospital, taxis", wide: true },
   { id: "stay", title: "Share your stay", blurb: "Check in, tag us and get offers", feature: true }
 ];
 
@@ -302,6 +311,8 @@ function callBtn(num) { return '<a class="btn call-btn" data-tel href="tel:' + n
 function telLink(num) { return '<a class="tel" data-tel href="tel:' + num.replace(/\s/g, "") + '">' + esc(num) + "</a>"; }
 function slug(n) { return n.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
 var MAP_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>';
+var FB_LOGO = '<svg class="brand-logo" viewBox="0 0 24 24" role="img" aria-label="Facebook" style="stroke:none"><circle cx="12" cy="12" r="12" fill="#1877F2"/><path fill="#fff" d="M13.4 19.5v-6h2l.3-2.4h-2.3V9.6c0-.7.2-1.2 1.2-1.2h1.2V6.3c-.2 0-1-.1-1.8-.1-1.8 0-3 1.1-3 3.1v1.8H9v2.4h2v6z"/></svg>';
+var IG_LOGO = '<svg class="brand-logo" viewBox="0 0 24 24" role="img" aria-label="Instagram" style="stroke:none"><defs><linearGradient id="igg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FEDA75"/><stop offset=".35" stop-color="#FA7E1E"/><stop offset=".6" stop-color="#D62976"/><stop offset=".85" stop-color="#962FBF"/><stop offset="1" stop-color="#4F5BD5"/></linearGradient></defs><rect width="24" height="24" rx="6" fill="url(#igg)"/><rect x="5.5" y="5.5" width="13" height="13" rx="3.8" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="12" cy="12" r="3.1" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="15.9" cy="8.1" r=".95" fill="#fff"/></svg>';
 function icon(id) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICONS[id] + "</svg>"; }
 /* QR codes are image files in img/ (qr-wifi, qr-facebook, qr-instagram, qr-website, qr-signup) */
 function qr(name, size) { return '<div class="qr"><img src="img/qr-' + name + '.png" width="' + size + '" height="' + size + '" alt="QR code"></div>'; }
@@ -416,11 +427,11 @@ var VIEWS = {
   },
   stay: function () {
     var signup = GUIDE.signup ? qr('signup', 150) : '<div class="pending" style="width:150px;height:150px">Sign-up link coming soon</div>';
-    return '<section class="share-hero"><img class="hero-bg" src="img/night.jpg" alt=""><div class="share-hero-in"><div class="eyebrow" style="color:var(--gold-soft)">Enjoying Forge Cottage?</div><h3>Share your stay with us</h3><p>We\'re a small family business and every check-in, tag and review really helps. Grab your phone and scan a code below.</p></div></section>' +
+    return '<section class="share-hero"><img class="hero-bg" src="img/night.jpg" alt=""><div class="share-hero-in"><div class="eyebrow" style="color:var(--gold-soft)">Enjoying Forge Cottage?</div><h3>Share your stay with us</h3><div class="social">' + FB_LOGO + IG_LOGO + '</div><p>We\'re a small family business and every check-in, tag and review really helps. Grab your phone and scan a code below.</p></div></section>' +
       '<article class="share-main">' + signup + '<div class="share-copy"><span class="chip">Guests hear first</span><h3>Join our mailing list</h3><p>Be the first to hear about last-minute dates, special offers and what\'s new at Escape to the Stables, before they go anywhere else. No spam, and you can unsubscribe any time.</p></div></article>' +
       '<div class="share-grid">' +
-      '<article class="share-card">' + qr('facebook', 132) + '<div><h3>Check in on Facebook</h3><p>Scan, tap <b>Check in</b> and let your friends know where you\'re staying. Then give our page a like.</p></div></article>' +
-      '<article class="share-card">' + qr('instagram', 132) + '<div><h3>Tag us on Instagram</h3><p>Post your hot tub evenings and hillside views and tag <b>@escapetothestables</b>. We love seeing your photos and might share our favourites.</p></div></article>' +
+      '<article class="share-card">' + qr('facebook', 132) + '<div><h3 class="brand-h">' + FB_LOGO + 'Check in on Facebook</h3><p>Scan, tap <b>Check in</b> and let your friends know where you\'re staying. Then give our page a like.</p></div></article>' +
+      '<article class="share-card">' + qr('instagram', 132) + '<div><h3 class="brand-h">' + IG_LOGO + 'Tag us on Instagram</h3><p>Post your hot tub evenings and hillside views and tag <b>@escapetothestables</b>. We love seeing your photos and might share our favourites.</p></div></article>' +
       '<article class="share-card">' + qr('website', 132) + '<div><h3>Come back soon</h3><p>Book your next stay direct on our website at <b>escapetothestables.co.uk</b>.</p></div></article>' +
       '</div>' +
       '<div class="notice"><strong>Photo ideas:</strong> the hot tub under the stars, Forge Cottage lit up at night, sunset over the Clwydian Range, a cosy evening by the wood stove, or a cone from Chilly Cow.</div>' +
@@ -433,7 +444,7 @@ function home() {
   return '<header class="hero"><img class="hero-bg" src="img/hills.jpg" alt=""><div class="wrap"><div><div class="place">' + GUIDE.cottage + " · " + GUIDE.area + '</div><h1>Welcome to<br><em>' + GUIDE.brand + '</em></h1><p class="lede">We\'re so glad you\'re here. Tap a tile below for anything you need during your stay.</p></div>' +
     '<div class="wifi-card">' + qr('wifi', 96) + '<div><div class="eyebrow">Free Wi-Fi</div><div class="net">' + esc(GUIDE.wifi.network) + '</div><div style="margin-top:4px"><span class="pw">' + esc(GUIDE.wifi.password) + '</span></div><p class="scan-tip">' + (isPhone() ? '<b>To join:</b> press and hold the code, then tap <b>Join network</b>.' : '<b>To join on your phone:</b> open the camera, point it at this code, then tap the Wi-Fi message that pops up. Or open this guide on your phone, press and hold the code and tap <b>Join network</b>.') + "</p></div></div></div></header>" +
     '<div class="wrap"><nav class="tiles" aria-label="Guest guide sections">' +
-    SECTIONS.filter(function (s) { return !s.hidden; }).map(function (s) { return '<button class="tile' + (s.feature ? " feature" : "") + (s.wide ? " wide" : "") + '" data-go="' + s.id + '">' + icon(s.id) + "<b>" + s.title + "</b><span>" + s.blurb + "</span></button>"; }).join("") +
+    SECTIONS.filter(function (s) { return !s.hidden; }).map(function (s) { return '<button class="tile' + (s.feature ? " feature" : "") + (s.wide ? " wide" : "") + '" data-go="' + s.id + '">' + icon(s.id) + "<b>" + s.title + "</b><span>" + s.blurb + "</span>" + (s.feature ? '<span class="social">' + FB_LOGO + IG_LOGO + "</span>" : "") + "</button>"; }).join("") +
     '</nav><div class="foot"><span>Need us? ' + hostsLine() + "</span><span>" + esc(GUIDE.email) + "</span></div></div>";
 }
 function section(id) {
