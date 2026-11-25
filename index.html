@@ -73,6 +73,7 @@ a { color: var(--forest); }
 .tile svg { width: 30px; height: 30px; stroke: var(--forest); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .tile b { font-family: var(--font-display); font-size: 19px; color: var(--forest); font-weight: 600; }
 .tile span { font-size: 14px; color: var(--muted); line-height: 1.35; }
+.tile.wide { grid-column: span 2; }
 .tile.feature { background: var(--forest); border-color: var(--forest); grid-column: 1 / -1; min-height: 0; }
 .tile.feature b, .tile.feature span { color: #fff; }
 .tile.feature svg { stroke: var(--gold-soft); }
@@ -268,7 +269,7 @@ var ICONS = {
   stay: '<path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/>'
 };
 var SECTIONS = [
-  { id: "wifi", title: "Wi-Fi", blurb: "Network and password" },
+  { id: "wifi", title: "Wi-Fi", blurb: "Network and password", hidden: true },
   { id: "rules", title: "House rules", blurb: "Please read on arrival" },
   { id: "house", title: "How things work", blurb: "Heating, TV, stove and more" },
   { id: "hottub", title: "Hot tub & BBQ", blurb: "Using the hot tub safely" },
@@ -279,7 +280,7 @@ var SECTIONS = [
   { id: "todo", title: "Things to do", blurb: "Castles, coast, adventure" },
   { id: "checkout", title: "Check-out", blurb: "10am, and before you leave" },
   { id: "contact", title: "Contact us", blurb: "Suzy and Arwel" },
-  { id: "emergency", title: "Emergencies", blurb: "999, hospital, taxis" },
+  { id: "emergency", title: "Emergencies", blurb: "999, hospital, taxis", wide: true },
   { id: "stay", title: "Share your stay", blurb: "Check in, tag us and get offers", feature: true }
 ];
 
@@ -430,7 +431,7 @@ function home() {
   return '<header class="hero"><img class="hero-bg" src="img/hills.jpg" alt=""><div class="wrap"><div><div class="place">' + GUIDE.cottage + " · " + GUIDE.area + '</div><h1>Welcome to<br><em>' + GUIDE.brand + '</em></h1><p class="lede">We\'re so glad you\'re here. Tap a tile below for anything you need during your stay.</p></div>' +
     '<div class="wifi-card">' + qr('wifi', 96) + '<div><div class="eyebrow">Free Wi-Fi</div><div class="net">' + esc(GUIDE.wifi.network) + '</div><div style="margin-top:4px"><span class="pw">' + esc(GUIDE.wifi.password) + '</span></div><p class="scan-tip">' + (isPhone() ? '<b>To join:</b> press and hold the code, then tap <b>Join network</b>.' : '<b>To join on your phone:</b> open the camera, point it at this code, then tap the Wi-Fi message that pops up. Or open this guide on your phone, press and hold the code and tap <b>Join network</b>.') + "</p></div></div></div></header>" +
     '<div class="wrap"><nav class="tiles" aria-label="Guest guide sections">' +
-    SECTIONS.map(function (s) { return '<button class="tile' + (s.feature ? " feature" : "") + '" data-go="' + s.id + '">' + icon(s.id) + "<b>" + s.title + "</b><span>" + s.blurb + "</span></button>"; }).join("") +
+    SECTIONS.filter(function (s) { return !s.hidden; }).map(function (s) { return '<button class="tile' + (s.feature ? " feature" : "") + (s.wide ? " wide" : "") + '" data-go="' + s.id + '">' + icon(s.id) + "<b>" + s.title + "</b><span>" + s.blurb + "</span></button>"; }).join("") +
     '</nav><div class="foot"><span>Need us? ' + hostsLine() + "</span><span>" + esc(GUIDE.email) + "</span></div></div>";
 }
 function section(id) {
