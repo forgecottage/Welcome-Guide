@@ -313,6 +313,28 @@ var TODO = [
 ];
 
 /* ====================================================================== */
+/* WHAT'S ON. To add an event, copy one { ... } line and change the words.
+   "until" (year-month-day) hides an event automatically once that date has passed.
+   Events without "until" always show, so use those for yearly highlights. */
+var WHATSON = [
+  { group: "Christmas 2026", items: [
+    { n: "Ruthin Christmas Extravaganza", d: "Sat 28 Nov", until: "2026-11-28", where: "Ruthin", ll: "Ruthin Castle, Ruthin LL15 2NU", t: "Ruthin Artisan Markets' Christmas fair, 10am to 3.30pm, with stalls indoors and out at Nantclwyd y Dre and in the grounds of Ruthin Castle. Handmade gifts, crafts, local food and drink.", url: "https://www.facebook.com/RuthinArtisanMarkets/" },
+    { n: "Rhyl Merry Makers & Christmas lights", d: "Sat 28 Nov", until: "2026-11-28", where: "Rhyl", ll: "Queen's Market, Rhyl", t: "Free crafts, games, music and Christmas characters at Queen's Market from 12 noon to 4pm, then music and the lights switch-on on the High Street from 4pm.", url: "https://rhyltowncouncil.org.uk/en/events/merry-makers-2026-11-28" },
+    { n: "Denbigh festive markets & lights", d: "Sun 29 Nov", until: "2026-11-29", where: "Denbigh town centre", ll: "Denbigh town centre, Denbigh LL16 3NU", t: "From 12 noon: festive markets, live entertainment, family activities, hot food and drink, Father Christmas, and the Christmas lights celebrations.", url: "https://www.denbightowncouncil.gov.uk/images/2026_christmas_poster_edited.pdf" },
+    { n: "Rhuddlan Christmas market", d: "Sat 12 Dec", until: "2026-12-12", where: "Rhuddlan", ll: "The New Inn, Rhuddlan", t: "A small Christmas market in the beer garden of The New Inn, 2pm to 6pm.", url: "https://visitrhuddlan.co.uk/events/the-new-inn-christmas-market/" },
+    { n: "Llangollen Railway Santa Specials", d: "28 Nov to 24 Dec", until: "2026-12-24", where: "Llangollen", ll: "Llangollen Railway Station, Llangollen LL20 8SN", t: "A steam train trip through the Dee Valley in decorated carriages, with a visit from Santa and a gift for every child. Selected dates, so book ahead.", url: "https://llangollen-railway.co.uk/santa-special/" },
+    { n: "Aladdin at Rhyl Pavilion", d: "5 to 31 Dec", until: "2026-12-31", where: "Rhyl", ll: "Rhyl Pavilion Theatre, Rhyl LL18 3AQ", t: "This year's family pantomime, full of comedy, colourful costumes and special effects. Book ahead.", url: "https://rhylpavilion.co.uk/whats-on/" } ] },
+  { group: "Every week", items: [
+    { n: "Mold street market", d: "Wed & Sat", where: "Mold", ll: "Daniel Owen Square, Mold", t: "One of the biggest street markets in North Wales, with over 70 stalls along the High Street selling fresh fruit and veg, cheese, meat, plants and more. The indoor market is open Monday to Saturday.", url: "https://www.flintshire.gov.uk/en/LeisureAndTourism/Tourism/Mold-Market.aspx" } ] },
+  { group: "Highlights through the year", items: [
+    { n: "Llandudno Victorian Extravaganza", d: "Early May", where: "Llandudno", t: "Three days of Victorian fun across the town over the May Day bank holiday weekend, with a funfair, parades, vintage vehicles and street entertainment. Free entry." },
+    { n: "Llangollen International Eisteddfod", d: "July", where: "Llangollen", ll: "Royal International Pavilion, Llangollen", t: "Singers, choirs and dancers from around the world, with evening concerts. 2027 is the 80th festival, from 7 to 11 July.", url: "https://international-eisteddfod.co.uk/" },
+    { n: "Denbigh & Flint Show", d: "August", where: "Denbigh", t: "A traditional one-day agricultural show with livestock, horses, trade stands and a food hall. Next show: Thursday 19 August 2027.", url: "https://www.denbighandflintshow.com/" },
+    { n: "Mold Food & Drink Festival", d: "September", where: "Mold", t: "A big weekend of local food and drink, cookery demos and live music in the town centre. Next festival: 18 and 19 September 2027.", url: "https://moldfoodfestival.co.uk/" },
+    { n: "Denbigh Plum Feast", d: "October", where: "Denbigh", ll: "Denbigh Town Hall, Denbigh", t: "A day at Denbigh Town Hall celebrating the Denbigh plum, Wales' own variety, with local food and drink stalls. Usually early October." } ] }
+];
+
+/* ====================================================================== */
 var ICONS = {
   wifi: '<path d="M2 9a15 15 0 0 1 20 0"/><path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1"/>',
   rules: '<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 12h7M9 16h7"/>',
@@ -323,6 +345,7 @@ var ICONS = {
   shops: '<path d="M3 4h2l2.5 11h11L21 7H6.2"/><circle cx="9" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/>',
   takeaway: '<path d="M5 8h14l-1.5 12h-11z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
   treats: '<path d="M8 10a4 4 0 0 1 8 0"/><path d="M7 10h10l-5 11z"/>',
+  whatson: '<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M14 14h2M8 17.5h2"/>',
   todo: '<path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-6h6v6"/><path d="M4 9h16"/>',
   walks: '<path d="m3 20 6-11 4 7 3-4 5 8z"/><circle cx="17" cy="6" r="2"/>',
   checkout: '<path d="M14 4h5v16h-5"/><path d="M4 12h11M11 8l4 4-4 4"/>',
@@ -343,6 +366,7 @@ var SECTIONS = [
   { id: "treats", title: "Local treats", blurb: "Farm ice cream and produce" },
   { id: "walks", title: "Walks", blurb: "Four circular hill walks" },
   { id: "todo", title: "Things to do", blurb: "Castles, coast, adventure" },
+  { id: "whatson", title: "What's on", blurb: "Markets, festivals and events" },
   { id: "checkout", title: "Check-out", blurb: "10am, and before you leave" },
   { id: "contact", title: "Contact us", blurb: "Suzy and Arwel" },
   { id: "emergency", title: "Emergencies", blurb: "999, hospital, taxis" },
@@ -457,6 +481,16 @@ var VIEWS = {
           '<a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(w.route) + '" data-map="route-' + w.slug + '" data-kind="route" data-name="' + esc(w.n) + '">' + ROUTE_ICON + ' Route map</a></div></article>';
       }).join("") +
       '<div class="notice"><strong>Before you set off:</strong> wear sturdy footwear, as paths can be muddy, and check the weather, as the ridge is exposed. Take a torch for late-afternoon returns in autumn and winter.</div>';
+  },
+  whatson: function () {
+    var today = new Date().toISOString().slice(0, 10);
+    return '<p class="intro">Markets, festivals and events near the cottage. Dates can change, so please check before you set off.</p>' +
+      '<div class="card"><div class="head-row"><h3>See what\'s on during your stay</h3></div><p>For concerts, shows and events on the dates you\'re here, have a look at the North Wales events calendar.</p><div class="actions"><a class="btn map-btn" target="_blank" rel="noopener" href="https://www.gonorthwales.co.uk/whats-on">' + WEB_ICON + ' North Wales events calendar</a></div></div>' +
+      WHATSON.map(function (g) {
+        var items = g.items.filter(function (p) { return !p.until || p.until >= today; });
+        if (!items.length) return "";
+        return '<div class="sub">' + esc(g.group) + '</div><div class="grid2">' + items.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>";
+      }).join("");
   },
   todo: function () {
     return '<p class="intro">Adventure, wildlife, coast and culture, all within easy reach. Journey times are approximate by car. Please check opening times and book ahead for the busier attractions.</p>' +
