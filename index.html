@@ -8,7 +8,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Raleway:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: a home screen of large touch tiles over a hillside hero; each tile opens a full-screen section with a fixed Home bar. Built for an iPad on a stand, works on phones too. */
 :root {
@@ -24,8 +24,10 @@
   --warn-bg: #fdf1ec;
   --warn: #a2432a;
   --ok-bg: #e7f0ea;
-  --font-display: "Lora", Georgia, "Times New Roman", serif;
-  --font-body: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  /* Matches escapetothestables.co.uk: Amatic SC titles, Raleway headings, Georgia text */
+  --font-title: "Amatic SC", "Raleway", sans-serif;
+  --font-display: "Raleway", "Helvetica Neue", Arial, sans-serif;
+  --font-body: Georgia, Palatino, "Book Antiqua", "Palatino Linotype", serif;
   --radius: 14px;
   color-scheme: light;
 }
@@ -40,15 +42,15 @@ body {
 h1, h2, h3 { font-family: var(--font-display); font-weight: 600; color: var(--forest); text-wrap: balance; margin: 0; }
 p { margin: 0; }
 a { color: var(--forest); }
-.eyebrow { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+.eyebrow { font-family: var(--font-display); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
 
 /* Hero */
 .hero { position: relative; color: #fff; background: var(--forest-deep); overflow: hidden; }
 .hero .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
 .hero .wrap { position: relative; padding-block: 44px 36px; display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-end; justify-content: space-between; }
-.hero h1 { color: #fff; font-size: clamp(32px, 5vw, 52px); line-height: 1.1; }
-.hero h1 em { color: var(--gold-soft); font-style: italic; font-weight: 500; }
-.hero .place { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; opacity: .85; margin-bottom: 10px; }
+.hero h1 { color: #fff; font-family: var(--font-title); font-weight: 700; font-size: clamp(44px, 7vw, 76px); line-height: 1; letter-spacing: .02em; }
+.hero h1 em { color: var(--gold-soft); font-style: normal; }
+.hero .place { font-family: var(--font-display); font-size: 13px; letter-spacing: .2em; text-transform: uppercase; opacity: .85; margin-bottom: 10px; }
 .hero .lede { margin-top: 10px; max-width: 30em; opacity: .92; }
 .wifi-card { background: rgba(255,255,255,.96); color: var(--ink); border-radius: var(--radius); padding: 16px 18px; display: flex; gap: 16px; align-items: center; }
 .wifi-card .net { font-family: var(--font-display); font-size: 20px; color: var(--forest); font-weight: 600; }
@@ -77,7 +79,7 @@ a { color: var(--forest); }
 .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--forest); color: #fff; }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--forest); }
 .bar .wrap { display: flex; align-items: center; gap: 16px; padding-block: 12px; }
-.btn { appearance: none; border: 0; border-radius: 999px; font: inherit; font-weight: 600; cursor: pointer; padding: 10px 18px; background: var(--gold-soft); color: var(--forest-deep); display: inline-flex; align-items: center; gap: 8px; }
+.btn { appearance: none; border: 0; border-radius: 999px; font: inherit; font-family: var(--font-display); font-weight: 600; cursor: pointer; padding: 10px 18px; background: var(--gold-soft); color: var(--forest-deep); display: inline-flex; align-items: center; gap: 8px; }
 .bar h2 { color: #fff; font-size: 22px; }
 .view { padding-block: 24px 48px; display: grid; gap: 22px; }
 .intro { color: var(--muted); max-width: 42em; }
@@ -89,9 +91,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .card .meta { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; color: var(--muted); }
 .card .meta b { color: var(--forest); font-weight: 600; }
 .head-row { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
-.chip { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--gold-soft); color: #7a5d1f; white-space: nowrap; }
+.chip { font-family: var(--font-display); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--gold-soft); color: #7a5d1f; white-space: nowrap; }
 .chip.green { background: var(--ok-bg); color: var(--forest); }
-.sub { font-family: var(--font-body); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 600; display: flex; align-items: center; gap: 12px; }
+.sub { font-family: var(--font-display); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 600; display: flex; align-items: center; gap: 12px; }
 .sub::after { content: ""; flex: 1; height: 1px; background: var(--line); }
 .notice { border-radius: var(--radius); padding: 16px 20px; background: var(--gold-soft); border-left: 4px solid var(--gold); }
 .notice.warn { background: var(--warn-bg); border-left-color: var(--warn); }
@@ -128,7 +130,7 @@ a.tel { color: inherit; text-decoration: none; }
 .share-hero { position: relative; border-radius: var(--radius); overflow: hidden; background: var(--forest-deep); color: #fff; }
 .share-hero .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .5; }
 .share-hero-in { position: relative; padding: 40px 32px; display: grid; gap: 10px; max-width: 34em; }
-.share-hero h3 { color: #fff; font-size: clamp(28px, 4vw, 40px); }
+.share-hero h3 { color: #fff; font-family: var(--font-title); font-weight: 700; font-size: clamp(40px, 6vw, 60px); line-height: 1; }
 .share-main { background: var(--forest); color: #fff; border-radius: var(--radius); padding: 24px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
 .share-main h3 { color: #fff; font-size: 26px; }
 .share-main .pending { border-color: rgba(255,255,255,.4); color: #fff; }
