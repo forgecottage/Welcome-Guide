@@ -154,7 +154,7 @@ a.tel { color: inherit; text-decoration: none; }
 <main id="app"></main>
 <div id="map-modal" class="modal" hidden><div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="map-title">
   <h3 id="map-title"></h3><div class="qr"><img id="map-qr" width="220" height="220" alt="QR code for directions"></div>
-  <p>Scan with your phone camera to open directions from the cottage in Google Maps.</p>
+  <p id="map-text">Scan with your phone camera to open directions from the cottage in Google Maps.</p>
   <button class="btn" id="map-close">Close</button></div></div>
 
 <script>
@@ -206,16 +206,16 @@ var TREATS = [
 
 ];
 var WALKS = [
-  { n: "Coed Llangwyfan Forest Walk", slug: "walk-coed-llangwyfan", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "1.9 miles (3 km)", time: "About 1½ hours", type: "Moderate, forest tracks",
+  { n: "Coed Llangwyfan Forest Walk", slug: "walk-coed-llangwyfan", route: "https://cdnfd.cyfoethnaturiol.cymru/690184/clwydian-range-dee-valley-leaflet-en.pdf", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "1.9 miles (3 km)", time: "About 1½ hours", type: "Moderate, forest tracks",
     t: "A waymarked loop through the conifer forest on the side of the Clwydian Range, with glimpses back across the Vale of Clwyd. A good choice for a shorter walk or a wet day.",
     park: "Coed Llangwyfan car park (free), postcode CH7 5RP. About 10 minutes' drive from the cottage. No toilets." },
-  { n: "Penycloddiau Hillfort and Offa's Dyke", slug: "walk-penycloddiau", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "2.5 miles (4 km)", time: "About 1½ to 2 hours", type: "Moderate, hill paths",
+  { n: "Penycloddiau Hillfort and Offa's Dyke", slug: "walk-penycloddiau", route: "https://naturalresourceswales.gov.uk/days-out/places-to-visit/north-east-wales/coed-llangwyfan?lang=en", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "2.5 miles (4 km)", time: "About 1½ to 2 hours", type: "Moderate, hill paths",
     t: "Follow Offa's Dyke Path up from the forest to Penycloddiau, one of the largest Iron Age hillforts in Wales, then loop back down. Big views over the Vale of Clwyd on a clear day.",
     park: "Coed Llangwyfan car park (free), postcode CH7 5RP. The path isn't fully waymarked, so take a map or phone." },
-  { n: "Moel Arthur Circular", slug: "walk-moel-arthur", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "4 miles (6.6 km)", time: "About 2½ hours", type: "Moderate, hill paths",
+  { n: "Moel Arthur Circular", slug: "walk-moel-arthur", route: "https://naturalresourceswales.gov.uk/days-out/places-to-visit/north-east-wales/coed-llangwyfan?lang=en", dest: "Coed Llangwyfan car park, CH7 5RP", dist: "4 miles (6.6 km)", time: "About 2½ hours", type: "Moderate, hill paths",
     t: "Head south along the ridge on Offa's Dyke Path to Moel Arthur, a steep little hill crowned by an Iron Age fort, and return through the forest. One of the best views in the Clwydian Range.",
     park: "Coed Llangwyfan car park (free), postcode CH7 5RP. The route isn't fully waymarked, so take a map or phone." },
-  { n: "Moel Famau and the Jubilee Tower", slug: "walk-moel-famau", dest: "Moel Famau car park, Bwlch Penbarras, CH7 5SH", dist: "3.6 miles (5.8 km)", time: "About 2½ hours", type: "Moderate, 280 m climb",
+  { n: "Moel Famau and the Jubilee Tower", slug: "walk-moel-famau", route: "https://cdnfd.cyfoethnaturiol.cymru/690184/clwydian-range-dee-valley-leaflet-en.pdf", dest: "Moel Famau car park, Bwlch Penbarras, CH7 5SH", dist: "3.6 miles (5.8 km)", time: "About 2½ hours", type: "Moderate, 280 m climb",
     t: "The classic Clwydian walk. A waymarked loop climbs steeply but steadily to the Jubilee Tower on the summit of Moel Famau, the highest point in the range, with views to Snowdonia, the coast and on a clear day Liverpool.",
     park: "Moel Famau car park, Bwlch Penbarras, postcode CH7 5SH (it covers a wide area). About 20 minutes' drive. Pay by card or contactless: £2.50 for 3 hours, £6 all day. Toilets on site." }
 ];
@@ -280,6 +280,7 @@ function mapUrl(p) {
 function walkUrl(w) {
   return "https://www.google.com/maps/dir/?api=1&origin=" + GUIDE.location.gps.replace(/\s/g, "") + "&destination=" + encodeURIComponent(w.dest);
 }
+var ROUTE_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg>';
 function isPhone() { return window.innerWidth < 700; }
 var PHONE_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>';
 /* Phone numbers: tap to call on a phone; on the iPad they just show the number */
@@ -357,7 +358,8 @@ var VIEWS = {
         return '<article class="card walk"><div class="eyebrow">Walk ' + (i + 1) + ' · Circular</div><h3>' + esc(w.n) + '</h3>' +
           '<dl class="walk-stats"><div><dt>Distance</dt><dd>' + esc(w.dist) + '</dd></div><div><dt>Time</dt><dd>' + esc(w.time) + '</dd></div><div><dt>Grade</dt><dd>' + esc(w.type) + '</dd></div></dl>' +
           '<p>' + esc(w.t) + '</p><p class="small"><b>Where to park:</b> ' + esc(w.park) + '</p>' +
-          '<div class="actions"><a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(walkUrl(w)) + '" data-map="' + w.slug + '" data-name="' + esc(w.n) + '">' + MAP_ICON + ' Directions to the car park</a></div></article>';
+          '<div class="actions"><a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(walkUrl(w)) + '" data-map="' + w.slug + '" data-name="' + esc(w.n) + '">' + MAP_ICON + ' Directions to the car park</a>' +
+          '<a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(w.route) + '" data-map="route-' + w.slug + '" data-kind="route" data-name="' + esc(w.n) + '">' + ROUTE_ICON + ' Route map</a></div></article>';
       }).join("") +
       '<div class="notice"><strong>Before you set off:</strong> wear sturdy footwear, as paths can be muddy, and check the weather, as the ridge is exposed. Take a torch for late-afternoon returns in autumn and winter.</div>';
   },
@@ -433,7 +435,7 @@ document.addEventListener("click", function (e) {
   var m = e.target.closest ? e.target.closest("[data-map]") : null;
   if (e.target.closest && e.target.closest("[data-tel]") && !isPhone()) { e.preventDefault(); return; }
   if (m && isPhone()) return;
-  if (m) { e.preventDefault(); document.getElementById("map-title").textContent = m.getAttribute("data-name"); document.getElementById("map-qr").src = "img/map/" + m.getAttribute("data-map") + ".png"; document.getElementById("map-modal").hidden = false; return; }
+  if (m) { e.preventDefault(); document.getElementById("map-title").textContent = m.getAttribute("data-name"); document.getElementById("map-qr").src = "img/map/" + m.getAttribute("data-map") + ".png"; document.getElementById("map-text").textContent = m.getAttribute("data-kind") === "route" ? "Scan with your phone camera to open the route map and trail guide on your phone." : "Scan with your phone camera to open directions from the cottage in Google Maps."; document.getElementById("map-modal").hidden = false; return; }
   if (e.target.id === "map-close" || e.target.id === "map-modal") { document.getElementById("map-modal").hidden = true; return; }
   var t = e.target.closest ? e.target.closest("[data-go]") : null;
   if (!t) return;
