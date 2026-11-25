@@ -54,6 +54,9 @@ a { color: var(--forest); }
 .hero .lede { margin-top: 10px; max-width: 30em; opacity: .92; }
 .wifi-card { background: rgba(255,255,255,.96); color: var(--ink); border-radius: var(--radius); padding: 16px 18px; display: flex; gap: 16px; align-items: center; }
 .wifi-card .net { font-family: var(--font-display); font-size: 20px; color: var(--forest); font-weight: 600; }
+.wifi-card { box-sizing: border-box; max-width: 100%; }
+.wifi-card > div { min-width: 0; }
+@media (max-width: 600px) { .wifi-card { gap: 12px; padding: 14px; } .wifi-card img { width: 80px !important; height: 80px !important; } .wifi-card .pw { font-size: 15px; letter-spacing: 0; padding: 2px 6px; white-space: nowrap; } }
 .wifi-card .scan-tip { margin-top: 8px; font-size: 14px; line-height: 1.35; max-width: 19em; color: var(--muted); }
 .wifi-card .scan-tip b { color: var(--forest); }
 .scan-steps { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
@@ -314,7 +317,7 @@ function place(p, chip) {
 var VIEWS = {
   wifi: function () {
     return '<div class="card" style="flex-direction:row;flex-wrap:wrap;gap:24px;align-items:center">' + qr('wifi', 180) +
-      '<div style="display:grid;gap:10px;min-width:0"><div class="eyebrow">Free Wi-Fi</div><div>Network<br><span style="font-family:var(--font-display);font-size:28px;color:var(--forest);font-weight:600">' + esc(GUIDE.wifi.network) + '</span></div><div>Password<br><span class="mono" style="font-size:24px">' + esc(GUIDE.wifi.password) + '</span></div><ol class="scan-steps"><li>Open the <b>camera</b> app on your phone (no special app needed).</li><li>Hold it over the code for a second or two, so the whole square is on screen.</li><li>Tap the <b>Join network</b> message that pops up. You\'re connected.</li></ol><p class="small">Code not working? Go to Wi-Fi in your phone\'s settings, choose ' + esc(GUIDE.wifi.network) + ' and type the password.</p></div></div>';
+      '<div style="display:grid;gap:10px;min-width:0"><div class="eyebrow">Free Wi-Fi</div><div>Network<br><span style="font-family:var(--font-display);font-size:28px;color:var(--forest);font-weight:600">' + esc(GUIDE.wifi.network) + '</span></div><div>Password<br><span class="mono" style="font-size:24px">' + esc(GUIDE.wifi.password) + '</span></div>' + (isPhone() ? '<ol class="scan-steps"><li><b>Press and hold</b> the code with your finger.</li><li>Tap <b>Join network</b> in the menu that appears. You\'re connected.</li></ol>' : '<ol class="scan-steps"><li>Open the <b>camera</b> on your phone and point it at the code.</li><li>Tap the <b>Wi-Fi</b> message that pops up, then <b>Join</b>. You\'re connected.</li></ol><p class="small">Viewing this guide on your phone? Press and hold the code and tap <b>Join network</b>.</p>') + '<p class="small">Code not working? Go to Wi-Fi in your phone\'s settings, choose ' + esc(GUIDE.wifi.network) + ' and type the password.</p></div></div>';
   },
   rules: function () {
     var r = ["No smoking", "No parties (maximum 4 guests)", "No pets", "No outdoor music after 8.30pm", "Respect our neighbours", "Please report any damage"];
@@ -425,7 +428,7 @@ function taxi() { return '<div class="notice green"><strong>Need a taxi?</strong
 
 function home() {
   return '<header class="hero"><img class="hero-bg" src="img/hills.jpg" alt=""><div class="wrap"><div><div class="place">' + GUIDE.cottage + " · " + GUIDE.area + '</div><h1>Welcome to<br><em>' + GUIDE.brand + '</em></h1><p class="lede">We\'re so glad you\'re here. Tap a tile below for anything you need during your stay.</p></div>' +
-    '<div class="wifi-card">' + qr('wifi', 96) + '<div><div class="eyebrow">Free Wi-Fi</div><div class="net">' + esc(GUIDE.wifi.network) + '</div><div style="margin-top:4px"><span class="pw">' + esc(GUIDE.wifi.password) + '</span></div><p class="scan-tip">' + (isPhone() ? 'Go to Wi-Fi in your phone\'s settings, pick ' + esc(GUIDE.wifi.network) + ' and type the password.' : '<b>To join:</b> open your phone\'s camera, hold it over this code for a second, then tap the Wi-Fi message that pops up.') + "</p></div></div></div></header>" +
+    '<div class="wifi-card">' + qr('wifi', 96) + '<div><div class="eyebrow">Free Wi-Fi</div><div class="net">' + esc(GUIDE.wifi.network) + '</div><div style="margin-top:4px"><span class="pw">' + esc(GUIDE.wifi.password) + '</span></div><p class="scan-tip">' + (isPhone() ? '<b>To join:</b> press and hold the code, then tap <b>Join network</b>.' : '<b>To join on your phone:</b> open the camera, point it at this code, then tap the Wi-Fi message that pops up. Or open this guide on your phone, press and hold the code and tap <b>Join network</b>.') + "</p></div></div></div></header>" +
     '<div class="wrap"><nav class="tiles" aria-label="Guest guide sections">' +
     SECTIONS.map(function (s) { return '<button class="tile' + (s.feature ? " feature" : "") + '" data-go="' + s.id + '">' + icon(s.id) + "<b>" + s.title + "</b><span>" + s.blurb + "</span></button>"; }).join("") +
     '</nav><div class="foot"><span>Need us? ' + hostsLine() + "</span><span>" + esc(GUIDE.email) + "</span></div></div>";
