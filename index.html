@@ -117,6 +117,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .btn { appearance: none; border: 0; border-radius: 999px; font: inherit; font-family: var(--font-display); font-weight: 600; cursor: pointer; padding: 10px 18px; background: var(--gold-soft); color: var(--forest-deep); display: inline-flex; align-items: center; gap: 8px; }
 .bar .btn { white-space: nowrap; flex: none; }
 .bar h2 { color: #fff; font-size: 22px; }
+.gate-btn { justify-self: center; font-size: 19px; padding: 16px 30px; background: var(--forest); color: #fff; margin-top: 6px; }
 .view { padding-block: 24px 48px; display: grid; gap: 22px; }
 .intro { color: var(--muted); max-width: 42em; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -563,10 +564,23 @@ function section(id) {
   var s = SECTIONS.filter(function (x) { return x.id === id; })[0];
   return '<div class="bar"><div class="wrap"><button class="btn" data-go="">← Home</button><h2>' + s.title + '</h2></div></div><div class="wrap"><div class="view">' + VIEWS[id]() + "</div></div>";
 }
+/* Rules first: guests must tap "I've read the house rules" before the rest of the guide opens.
+   The tap is remembered on that phone or tablet for RULES_DAYS days, then the rules show again. */
+var RULES_DAYS = 3, RULES_KEY = "fc-rules-read", rulesReadNow = false;
+function rulesOK() {
+  if (rulesReadNow) return true;
+  try { var t = +localStorage.getItem(RULES_KEY); return t > 0 && Date.now() - t < RULES_DAYS * 864e5; } catch (e) { return false; }
+}
+function gate() {
+  return '<div class="bar"><div class="wrap"><h2>Welcome to ' + esc(GUIDE.cottage) + '</h2></div></div><div class="wrap"><div class="view">' +
+    '<div class="notice green"><strong>Before you start, please read our house rules.</strong> Tap the button at the bottom to open the rest of the guide, including Wi-Fi, places to eat and things to do.</div>' +
+    '<h2 class="sub-head">House rules</h2>' + VIEWS.rules() +
+    '<button class="btn gate-btn" data-accept>I\'ve read the house rules</button></div></div>';
+}
 function render() {
   document.getElementById("map-modal").hidden = true;
   var id = (location.hash || "").replace("#", "");
-  document.getElementById("app").innerHTML = VIEWS[id] ? section(id) : home();
+  document.getElementById("app").innerHTML = !rulesOK() ? gate() : VIEWS[id] ? section(id) : home();
   window.scrollTo(0, 0);
 }
 document.addEventListener("submit", function (e) {
@@ -578,6 +592,7 @@ document.addEventListener("submit", function (e) {
   location.href = "mailto:" + GUIDE.email + "?subject=" + encodeURIComponent("Suggestions & feedback - Forge Cottage") + "&body=" + encodeURIComponent(body);
 });
 document.addEventListener("click", function (e) {
+  if (e.target.closest && e.target.closest("[data-accept]")) { rulesReadNow = true; try { localStorage.setItem(RULES_KEY, String(Date.now())); } catch (err) {} render(); return; }
   var so = e.target.closest ? e.target.closest("[data-social]") : null;
   if (so) { e.preventDefault(); e.stopPropagation(); var k = so.getAttribute("data-social"), url = GUIDE[k];
     if (isPhone()) { window.open(url, "_blank", "noopener"); return; }
