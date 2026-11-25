@@ -78,12 +78,15 @@ a { color: var(--forest); }
 .sub-head { font-family: var(--font-title); font-weight: 700; font-size: 40px; color: var(--forest); margin: 18px 0 0; }
 .tile.feature { background: var(--forest); border-color: var(--forest); grid-column: 1 / -1; min-height: 0; }
 .tile.feature b, .tile.feature span { color: #fff; }
+.tile.feature.alt { background: var(--gold-soft); border-color: var(--gold-soft); }
+.tile.feature.alt b, .tile.feature.alt span { color: var(--forest-deep); }
+.tile.feature.alt svg { stroke: var(--forest); }
 .tile.feature svg { stroke: var(--gold-soft); }
 .tile.feature { position: relative; }
 .tile .social { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); display: flex; gap: 14px; }
 .tile .social { gap: 18px; }
 .tile .social svg { width: 76px; height: 76px; }
-@media (max-width: 600px) { .tile.feature { padding-right: 150px; } .tile .social { right: 14px; gap: 10px; } .tile .social svg { width: 58px; height: 58px; } }
+@media (max-width: 600px) { .tile.feature:not(.alt) { padding-right: 150px; } .tile .social { right: 14px; gap: 10px; } .tile .social svg { width: 58px; height: 58px; } }
 .social-link { cursor: pointer; display: inline-flex; align-items: center; gap: 10px; color: inherit; }
 .social-link svg { transition: transform .15s; }
 .social-link:active svg { transform: scale(.92); }
@@ -325,6 +328,7 @@ var ICONS = {
   checkout: '<path d="M14 4h5v16h-5"/><path d="M4 12h11M11 8l4 4-4 4"/>',
   contact: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
   emergency: '<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/>',
+  feedback: '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
   stay: '<path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/>'
 };
 var SECTIONS = [
@@ -342,8 +346,8 @@ var SECTIONS = [
   { id: "checkout", title: "Check-out", blurb: "10am, and before you leave" },
   { id: "contact", title: "Contact us", blurb: "Suzy and Arwel" },
   { id: "emergency", title: "Emergencies", blurb: "999, hospital, taxis" },
-  { id: "feedback", title: "Your feedback", blurb: "Tell us how we did", hidden: true },
-  { id: "stay", title: "Share your stay", blurb: "Follow us for offers, check in and tag us", feature: true }
+  { id: "stay", title: "Share your stay", blurb: "Follow us for offers, check in and tag us", feature: true },
+  { id: "feedback", title: "Leave us feedback", blurb: "Tell us how we did, it only takes a minute", feature: true, alt: true }
 ];
 
 function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -521,7 +525,7 @@ function home() {
   return '<header class="hero"><img class="hero-bg" src="img/hills.jpg" alt=""><div class="wrap"><div><div class="place">' + GUIDE.cottage + " · " + GUIDE.area + '</div><h1>Welcome to<br><em>' + GUIDE.brand + '</em></h1><p class="lede">We\'re so glad you\'re here. Tap a tile below for anything you need during your stay.</p></div>' +
     '<div class="wifi-card">' + qr('wifi', 96) + '<div><div class="eyebrow">Free Wi-Fi</div><div class="net">' + esc(GUIDE.wifi.network) + '</div><div style="margin-top:4px"><span class="pw">' + esc(GUIDE.wifi.password) + '</span></div><p class="scan-tip">' + (isPhone() ? '<b>To join:</b> press and hold the code, then tap <b>Join network</b>.' : '<b>To join on your phone:</b> open the camera, point it at this code, then tap the Wi-Fi message that pops up. Or open this guide on your phone, press and hold the code and tap <b>Join network</b>.') + "</p></div></div></div></header>" +
     '<div class="wrap"><nav class="tiles" aria-label="Guest guide sections">' +
-    SECTIONS.filter(function (s) { return !s.hidden; }).map(function (s) { return '<button class="tile' + (s.feature ? " feature" : "") + (s.wide ? " wide" : "") + '" data-go="' + s.id + '">' + icon(s.id) + "<b>" + s.title + "</b><span>" + s.blurb + "</span>" + (s.feature ? '<span class="social">' + social("facebook", FB_LOGO) + social("instagram", IG_LOGO) + "</span>" : "") + "</button>"; }).join("") +
+    SECTIONS.filter(function (s) { return !s.hidden; }).map(function (s) { return '<button class="tile' + (s.feature ? " feature" : "") + (s.alt ? " alt" : "") + (s.wide ? " wide" : "") + '" data-go="' + s.id + '">' + icon(s.id) + "<b>" + s.title + "</b><span>" + s.blurb + "</span>" + (s.id === "stay" ? '<span class="social">' + social("facebook", FB_LOGO) + social("instagram", IG_LOGO) + "</span>" : "") + "</button>"; }).join("") +
     '</nav><div class="foot"><span>Need us? ' + hostsLine() + "</span><span>" + esc(GUIDE.email) + "</span></div></div>";
 }
 function section(id) {
