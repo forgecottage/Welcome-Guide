@@ -208,25 +208,52 @@ var GUIDE = {
 };
 
 var EAT = [
-  { n: "Dinorben Arms", d: "About 5 min", where: "Bodfari", t: "In the heart of Bodfari, with stunning views. Ideal for lunch, an evening meal, or a drink while out on a walk.", web: "brunningandprice.co.uk/dinorbenarms", url: "https://www.brunningandprice.co.uk/dinorbenarms/" },
-  { n: "Brookhouse Mill", d: "About 10 min", where: "Ruthin Road", t: "Lovely pub grub in a 17th-century mill with the original cogs still on show.", web: "brookhousemill.co.uk", url: "https://brookhousemill.co.uk/", tel: "01745 813377" },
-  { n: "Con Amici Italian", d: "About 10 min", where: "Denbigh", t: "Fresh handmade pizza and pasta, with vegetarian options.", tel: "01745 812227" },
-  { n: "Nant y Felin", d: "About 8 min", where: "Pentre Llanrhaeadr", t: "Organic, locally sourced food, handmade sourdough and their own ice cream. Wednesday to Saturday evenings and Sunday lunch.", web: "nantyfelin.co.uk", url: "https://nantyfelin.co.uk/" },
-  { n: "The White Horse", d: "About 10 min", where: "Hendrerwydd", t: "A fabulous country restaurant, ideal for a cosy drink or a special occasion. Book ahead.", web: "whitehorserestaurant.co.uk", url: "https://whitehorserestaurant.co.uk/", tel: "01745 584638" },
-  { n: "The Royal Oak", d: "About 12 min", where: "Caerwys", t: "A friendly pub with a lovely beer garden, often showing the football and rugby.", web: "Facebook page", url: "https://www.facebook.com/TheRoyalOakCaerwys/" },
-  { n: "Piccadilly Inn", d: "About 12 min", where: "Caerwys", t: "A stunning country restaurant with delicious meals.", web: "piccadillyinncaerwys.co.uk", url: "https://www.piccadillyinncaerwys.co.uk/" },
-  { n: "Indian Lounge", d: "About 15 min", where: "Nannerch", t: "Fantastic Indian cuisine, with takeaway and dine-in options.", web: "indianloungenannerch.co.uk", url: "https://indianloungenannerch.co.uk/" },
-  { n: "The Crown", d: "About 15 min", where: "Lixwm", t: "A welcoming village pub serving delicious food." },
-  { n: "The Drovers Arms", d: "About 15 min", where: "Rhewl, near Ruthin", pc: "LL15 2UD", t: "A historic country pub beside the River Clywedog with a big, welcoming restaurant. Generous home-made pub food using local ingredients. Book ahead at weekends.", tel: "01824 703183", web: "thedrovers.co.uk", url: "https://thedrovers.co.uk/" },
-  { n: "The Griffin Inn", d: "About 20 min", where: "Llanbedr Dyffryn Clwyd", pc: "LL15 1UP", t: "Grade II listed stone inn at the foot of the Clwydian Range. Oak beams, log fires, cask ales and a big beer garden. Offa's Dyke Path is just up the hill.", web: "griffin.wales", url: "https://griffin.wales/", tel: "01824 705542" }
+  { group: "Afternoon tea & lunch", items: [
+    { n: "Afonwen Craft & Antique Centre", d: "About 8 min", walk: "1 hr 18 min", where: "Afonwen", t: "Browse the craft and antique centre, then stop for lunch or afternoon tea in the café.", tel: "01352 720797", web: "afonwen.co.uk", url: "https://afonwen.co.uk/" },
+    { n: "Sugar Plum Tea Room", d: "About 14 min", where: "Rhewl, near Ruthin", t: "A charming tea room in Rhewl's old station, perfect for afternoon tea or a light lunch.", tel: "01824 702852", web: "sugarplumtearoom.co.uk", url: "https://www.sugarplumtearoom.co.uk/" },
+    { n: "Jacksons Garden Centre", d: "About 18 min", where: "Trelawnyd", t: "A big garden centre with a restaurant for lunch and cake, plus seasonal displays.", tel: "01745 570680", web: "jacksonsgardencentre.com", url: "https://www.jacksonsgardencentre.com/" } ] },
+  { group: "Pubs serving food", items: [
+    { n: "Dinorben Arms", d: "About 4 min", walk: "28 min", where: "Bodfari", t: "In the heart of Bodfari, with stunning views. Ideal for lunch, an evening meal, or a drink while out on a walk.", tel: "01745 775090", web: "brunningandprice.co.uk/dinorbenarms", url: "https://www.brunningandprice.co.uk/dinorbenarms/" },
+    { n: "The Trefnant Inn (Coulton's Bar & Grill)", d: "About 7 min", walk: "1 hr 22 min", where: "Trefnant", t: "A village pub with a bar and grill menu, and Sunday lunches.", tel: "01745 731767", web: "Facebook page", url: "https://www.facebook.com/TrefnantInn/" },
+    { n: "The White Horse", d: "About 10 min", walk: "1 hr 20 min", where: "Hendrerwydd", t: "A fabulous country restaurant, ideal for a cosy drink or a special occasion.", tel: "01824 790218", web: "whitehorserestaurant.co.uk", url: "https://whitehorserestaurant.co.uk/" },
+    { n: "The Royal Oak", d: "About 12 min", where: "Caerwys", t: "A friendly pub with a lovely beer garden, often showing the football and rugby.", web: "Facebook page", url: "https://www.facebook.com/TheRoyalOakCaerwys/" },
+    { n: "Piccadilly Inn", d: "About 12 min", where: "Caerwys", t: "A stunning country restaurant with delicious meals.", web: "piccadillyinncaerwys.co.uk", url: "https://www.piccadillyinncaerwys.co.uk/" },
+    { n: "The Plough", d: "About 14 min", where: "St Asaph", t: "A popular pub and restaurant in St Asaph.", tel: "01745 585080", web: "ploughsa.com", url: "https://www.ploughsa.com/" },
+    { n: "The Crown", d: "About 15 min", where: "Lixwm", t: "A welcoming village pub serving delicious food." },
+    { n: "The Drovers Arms", d: "About 15 min", where: "Rhewl, near Ruthin", pc: "LL15 2UD", t: "A historic country pub beside the River Clywedog with a big, welcoming restaurant. Generous home-made pub food using local ingredients.", tel: "01824 703183", web: "thedrovers.co.uk", url: "https://thedrovers.co.uk/" },
+    { n: "The Griffin Inn", d: "About 18 min", where: "Llanbedr Dyffryn Clwyd", pc: "LL15 1UP", t: "Grade II listed stone inn at the foot of the Clwydian Range. Oak beams, log fires, cask ales and a big beer garden.", tel: "01824 705542", web: "griffin.wales", url: "https://griffin.wales/" },
+    { n: "Tafarn y Ddraig (The Dragon Tavern)", d: "About 19 min", where: "Ruthin Castle", t: "The tavern at Ruthin Castle Hotel, with pub classics in a historic setting.", tel: "01824 702664", web: "ruthincastle.co.uk", url: "https://www.ruthincastle.co.uk/dining/the-dragon-tavern/" },
+    { n: "The White Horse, Llanfair", d: "About 21 min", where: "Llanfair Dyffryn Clwyd", t: "A village pub with food in Llanfair Dyffryn Clwyd, south of Ruthin.", tel: "01824 308418", web: "Facebook page", url: "https://www.facebook.com/thewhitehorsellanfair/" },
+    { n: "The Three Pigeons", d: "About 23 min", where: "Graigfechan", pc: "LL15 2EU", t: "A historic drovers' inn with oak beams, log fires and fabulous views over the Vale of Clwyd.", tel: "01824 705005", web: "Facebook page", url: "https://www.facebook.com/threepigeonsinn/" },
+    { n: "The New Inn", d: "About 23 min", where: "Dyserth", t: "A village pub and restaurant in Dyserth, near the waterfall.", tel: "01745 570482", web: "newinn.wales", url: "https://newinn.wales/" },
+    { n: "The Grouse Inn", d: "About 40 min", where: "Carrog", t: "Pub food by the River Dee, next to the Llangollen steam railway. Worth combining with a train ride.", tel: "01490 430272", web: "thegrouseinncarrog.co.uk", url: "https://thegrouseinncarrog.co.uk/" } ] },
+  { group: "Restaurants", items: [
+    { n: "Brookhouse Mill", d: "About 9 min", where: "Ruthin Road, Denbigh", t: "Lovely food in a 17th-century mill with the original cogs still on show.", tel: "01745 771180", web: "brookhousemill.co.uk", url: "https://brookhousemill.co.uk/" },
+    { n: "Con Amici", d: "About 7 min", walk: "1 hr 22 min", where: "Denbigh", t: "Italian restaurant with fresh handmade pizza and pasta, and vegetarian options.", tel: "01745 814444", web: "con-amici.co.uk", url: "https://www.con-amici.co.uk/" },
+    { n: "The Indian Lounge", d: "About 11 min", where: "Nannerch", t: "Fantastic Indian cuisine, with takeaway and dine-in options.", tel: "01352 741737", web: "indianloungenannerch.co.uk", url: "https://indianloungenannerch.co.uk/" },
+    { n: "Chen Lin Chinese", d: "About 12 min", where: "Back Row, Denbigh", t: "Popular Chinese restaurant and takeaway, well reviewed for portion size and value.", tel: "01745 816100", web: "Facebook page", url: "https://www.facebook.com/ChenLinChineseRestaurant/" },
+    { n: "Nant y Felin", d: "About 12 min", where: "Pentre Llanrhaeadr", t: "Organic, locally sourced food, handmade sourdough and their own ice cream. Wednesday to Saturday evenings and Sunday lunch.", tel: "01745 890834", web: "nantyfelin.co.uk", url: "https://nantyfelin.co.uk/" },
+    { n: "Bryn Williams at Porth Eirias", d: "About 27 min", where: "Colwyn Bay promenade", t: "Celebrity chef Bryn Williams' seafront restaurant, with views across the bay.", tel: "01492 533700", web: "portheirias.com", url: "https://portheirias.com/" },
+    { n: "Nikki Ip's", d: "About 35 min", where: "Deganwy", t: "Contemporary Chinese restaurant overlooking the Conwy estuary.", tel: "01492 596611", web: "nikkiips.com", url: "https://www.nikkiips.com/" },
+    { n: "Tyddyn Llan", d: "About 46 min", where: "Llandrillo, near Corwen", t: "Fine dining restaurant with rooms, for a special occasion (higher price range).", tel: "01490 440264", web: "tyddynllan.co.uk", url: "https://www.tyddynllan.co.uk/" } ] }
 ];
 var TAKEAWAY = [
-  { n: "Coriander Indian", del: true, where: "4 Bridge St, Denbigh", t: "Locals rave about it: tandoori, balti, vegetarian dishes, kebabs and a kids menu, with generous portions.", tel: "01745 818777", web: "mycoriander.co.uk", url: "https://mycoriander.co.uk/" },
-  { n: "Simply Fish & Chips", del: true, where: "Denbigh", t: "Highly rated local chippy with no minimum order. Also does pizza.", tel: "01745 812999", web: "Order on Just Eat", url: "https://www.just-eat.co.uk/restaurants-simply-fish-and-chips-groes/menu" },
+  { n: "Simply Fish & Chips", del: true, d: "8 min", where: "Denbigh", t: "Highly rated local chippy with no minimum order.", tel: "01745 812999", web: "Order on Just Eat", url: "https://www.just-eat.co.uk/restaurants-simply-fish-and-chips-groes/menu" },
+  { n: "Simply Pizza", del: true, d: "8 min", where: "Denbigh", t: "Pizza from the same team as Simply Fish & Chips.", tel: "07900 945817", web: "Order on Just Eat", url: "https://www.just-eat.co.uk/restaurants-simply-pizza-simply-fish-and-chips-groes/menu" },
+  { n: "Coriander Indian", del: true, d: "10 min", where: "4 Bridge St, Denbigh", t: "Locals rave about it: tandoori, balti, vegetarian dishes, kebabs and a kids menu, with generous portions.", tel: "01745 818777", web: "mycoriander.co.uk", url: "https://mycoriander.co.uk/" },
   { n: "Domino's Denbigh", del: true, where: "Denbigh Shopping Park", t: "Reliable pizza delivery. Order online or in the app and check for deals. Minimum order applies.", tel: "01745 777077", web: "dominos.co.uk", url: "https://www.dominos.co.uk/" },
-  { n: "Chen Lin Chinese", del: true, where: "Back Row, Denbigh", t: "Popular Chinese restaurant and takeaway, well reviewed for portion size and value.", tel: "01745 816100" },
   { n: "Tai Wing Express", del: true, where: "2 Rhyl Rd, Denbigh", t: "Highly rated Chinese takeaway with quick service.", tel: "01745 812158" },
-  { n: "Subway Denbigh", del: true, where: "Denbigh", t: "A lighter option, delivered to the door.", web: "Order on Just Eat", url: "https://www.just-eat.co.uk/restaurants-subway---denbigh-groes/menu" }
+  { n: "Subway Denbigh", del: true, where: "Denbigh", t: "A lighter option, delivered to the door.", web: "Order on Just Eat", url: "https://www.just-eat.co.uk/restaurants-subway---denbigh-groes/menu" },
+  { n: "Trefnant Fish & Chips", d: "7 min", where: "Trefnant", t: "The nearest chippy to the cottage.", tel: "01745 730536" },
+  { n: "The Indian Lounge", d: "11 min", where: "Nannerch", t: "Fantastic Indian food to take away.", tel: "01352 741737", web: "indianloungenannerch.co.uk", url: "https://indianloungenannerch.co.uk/" },
+  { n: "Nant y Felin", d: "12 min", where: "Pentre Llanrhaeadr", t: "Takeaway from the restaurant's organic, locally sourced menu.", tel: "01745 890834", web: "nantyfelin.co.uk", url: "https://nantyfelin.co.uk/" },
+  { n: "Chen Lin Chinese", d: "12 min", where: "Back Row, Denbigh", t: "Popular Chinese takeaway, well reviewed for portion size and value.", tel: "01745 816100", web: "Facebook page", url: "https://www.facebook.com/ChenLinChineseRestaurant/" },
+  { n: "Yue Hing Chinese", d: "13 min", where: "St Asaph", t: "Chinese takeaway in St Asaph.", tel: "01745 583678" },
+  { n: "Carlito's Woodfired Pizzas", d: "17 min", where: "Ruthin", t: "Wood-fired pizzas to collect in Ruthin.", tel: "07376 083702" }
+];
+var BUTCHERS = [
+  { n: "Daniel Morris", d: "About 9 min", where: "124 Vale Street, Denbigh", t: "Traditional family butcher on Denbigh's Vale Street. Great for stocking up for the BBQ.", tel: "01745 812585" },
+  { n: "JH Jones & Co", d: "About 9 min", where: "92 Vale Street, Denbigh", t: "Long-established butcher a few doors along Vale Street.", tel: "01745 812132" }
 ];
 var TREATS = [
   { n: "Chilly Cow Ice Cream", d: "About 15 min", where: "Llanychan, near Ruthin", pc: "LL15 1UF", t: "Farm ice cream with an honesty box. Made on the family farm from the milk of their Brown Swiss cows: honeycomb, chocolate fudge, sorbets, vegan options and even ice cream for dogs. Find the freezer by the farm gate.", web: "chillycow.co.uk", url: "https://www.chillycow.co.uk/" },
@@ -332,6 +359,7 @@ function place(p, chip) {
   var meta = [];
   if (p.pc) meta.push("Postcode: <b>" + esc(p.pc) + "</b>");
   else if (p.where) meta.push("Area: <b>" + esc(p.where) + "</b>");
+  if (p.walk) meta.push("Walk: <b>" + esc(p.walk) + "</b>");
   if (p.web) meta.push("Web: <b>" + (p.url ? '<a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.web) + "</a>" : esc(p.web)) + "</b>");
   return '<article class="card"><div class="head-row"><h3>' + esc(p.n) + "</h3>" + (chip || "") + "</div><p>" + esc(p.t) + "</p>" + (meta.length ? '<div class="meta">' + meta.join("") + "</div>" : "") +
     '<div class="actions">' + (p.tel ? callBtn(p.tel) : "") + '<a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(mapUrl(p)) + '" data-map="' + slug(p.n) + '" data-name="' + esc(p.n) + '">' + MAP_ICON + " Directions</a>" + (p.url ? '<a class="btn map-btn" target="_blank" rel="noopener" href="' + esc(p.url) + '">' + WEB_ICON + " Website</a>" : "") + "</div></article>";
@@ -376,18 +404,19 @@ var VIEWS = {
       '<div class="card"><h3>BBQ</h3><ul class="list"><li>A BBQ stand and 2 disposable BBQs are supplied when you order a BBQ kit. Extra disposable BBQs are £5 each.</li><li>Only use disposable BBQs, and leave the stand and tools clean. <b>Charcoal must not be used in the stand.</b></li><li>There is a fire extinguisher outside in case of emergency.</li></ul></div>';
   },
   eat: function () {
-    return '<p class="intro">A small selection of our favourites. See TripAdvisor for more recommendations.</p><div class="grid2">' +
-      EAT.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>" + taxi();
+    return '<p class="intro">Our favourite places to eat, from afternoon tea to fine dining. We recommend booking ahead. Drive times are from the cottage.</p>' +
+      EAT.map(function (g) { return '<div class="sub">' + esc(g.group) + '</div><div class="grid2">' + g.items.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>"; }).join("") + taxi();
   },
   takeaway: function () {
     var del = TAKEAWAY.filter(function (p) { return p.del; }), col = TAKEAWAY.filter(function (p) { return !p.del; });
     return '<div class="notice warn"><strong>Read this before ordering delivery.</strong> Our postcode ' + GUIDE.location.postcode + " does <b>not</b> bring drivers to our door. Always <b>call the restaurant</b> and give them our GPS coordinates <span class=\"mono\">" + GUIDE.location.gps + '</span> or what3words <span class="mono">' + GUIDE.location.w3w + "</span>. Some apps may show us as outside the delivery area, and a quick phone call usually sorts it. If a driver is struggling to find us, they can ring Suzy or Arwel.</div>" +
-      '<div class="sub">Delivering to the area</div><div class="grid2">' + del.map(function (p) { return place(p, '<span class="chip green">Delivers</span>'); }).join("") + "</div>" +
-      (col.length ? '<div class="sub">Collection only</div><div class="grid2">' + col.map(function (p) { return place(p, '<span class="chip">Collection</span>'); }).join("") + "</div>" : "");
+      '<div class="sub">Delivering to the area</div><div class="grid2">' + del.map(function (p) { return place(p, '<span class="chip green">Delivers' + (p.d ? " · " + esc(p.d) : "") + "</span>"); }).join("") + "</div>" +
+      (col.length ? '<div class="sub">Collection only</div><div class="grid2">' + col.map(function (p) { return place(p, '<span class="chip">Collection' + (p.d ? " · " + esc(p.d) : "") + "</span>"); }).join("") + "</div>" : "");
   },
   treats: function () {
     return '<p class="intro">Some of the most unique food experiences in North Wales are right on your doorstep.</p><div class="grid2">' +
-      TREATS.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>";
+      TREATS.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>" +
+      '<div class="sub">Eating in: local butchers</div><div class="grid2">' + BUTCHERS.map(function (p) { return place(p, '<span class="chip">' + esc(p.d) + "</span>"); }).join("") + "</div>";
   },
   walks: function () {
     return '<p class="intro">Four circular walks in the Clwydian Range, all a short drive from the cottage, from a forest loop to the summit of Moel Famau.</p>' +
