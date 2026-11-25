@@ -74,6 +74,7 @@ a { color: var(--forest); }
 .tile b { font-family: var(--font-display); font-size: 19px; color: var(--forest); font-weight: 600; }
 .tile span { font-size: 14px; color: var(--muted); line-height: 1.35; }
 .tile.wide { grid-column: span 2; }
+.sub-head { font-family: var(--font-title); font-weight: 700; font-size: 40px; color: var(--forest); margin: 18px 0 0; }
 .tile.feature { background: var(--forest); border-color: var(--forest); grid-column: 1 / -1; min-height: 0; }
 .tile.feature b, .tile.feature span { color: #fff; }
 .tile.feature svg { stroke: var(--gold-soft); }
@@ -270,9 +271,9 @@ var ICONS = {
 };
 var SECTIONS = [
   { id: "wifi", title: "Wi-Fi", blurb: "Network and password", hidden: true },
-  { id: "rules", title: "House rules", blurb: "Please read on arrival" },
-  { id: "house", title: "How things work", blurb: "Heating, TV, stove and more" },
-  { id: "hottub", title: "Hot tub & BBQ", blurb: "Using the hot tub safely" },
+  { id: "rules", title: "House rules", blurb: "Please read on arrival", wide: true },
+  { id: "house", title: "How things work", blurb: "Heating, TV, stove, hot tub and BBQ", wide: true },
+  { id: "hottub", title: "Hot tub & BBQ", blurb: "Using the hot tub safely", hidden: true },
   { id: "eat", title: "Eating out", blurb: "Our favourite pubs and restaurants" },
   { id: "takeaway", title: "Takeaways", blurb: "Delivery and collection" },
   { id: "treats", title: "Local treats", blurb: "Farm ice cream and produce" },
@@ -280,7 +281,7 @@ var SECTIONS = [
   { id: "todo", title: "Things to do", blurb: "Castles, coast, adventure" },
   { id: "checkout", title: "Check-out", blurb: "10am, and before you leave" },
   { id: "contact", title: "Contact us", blurb: "Suzy and Arwel" },
-  { id: "emergency", title: "Emergencies", blurb: "999, hospital, taxis", wide: true },
+  { id: "emergency", title: "Emergencies", blurb: "999, hospital, taxis" },
   { id: "stay", title: "Share your stay", blurb: "Check in, tag us and get offers", feature: true }
 ];
 
@@ -339,7 +340,8 @@ var VIEWS = {
       ["Other", "Kettle, toaster, sandwich maker, iron and ironing board, hair dryer, folding BBQ stand and disposable BBQs. Just ask if you need anything else."]
     ];
     return '<dl class="how">' + rows.map(function (r) { return "<div><dt>" + r[0] + "</dt><dd>" + r[1] + "</dd></div>"; }).join("") + "</dl>" +
-      '<div class="notice green"><strong>Struggling with an appliance?</strong> Please don\'t hesitate to contact us. ' + hostsLine() + "</div>";
+      '<div class="notice green"><strong>Struggling with an appliance?</strong> Please don\'t hesitate to contact us. ' + hostsLine() + "</div>" +
+      '<h2 class="sub-head" id="hottub-bbq">Hot tub &amp; BBQ</h2>' + VIEWS.hottub();
   },
   hottub: function () {
     return '<div class="grid2"><figure class="photo"><img src="img/hottub-panel.jpg" alt="Hot tub control panel" style="object-fit:contain;background:#fff"><figcaption>The bubble and light buttons on the control panel</figcaption></figure>' +
